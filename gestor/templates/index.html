@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content align-items-center">
+        <div class="card border-0">
+            <div class="card-title">
+                <span>
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    Agregar Producto
+                </span>
+            </div>
+            <div class="card-body p-0 m-auto">
+                <a class="btn btn-block bg-success text-white w-100" href="">
+                    <i class="fa-solid fa-circle-plus fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-around">
+        <div>
+            <span>
+                <i class="fa-solid fa-database"></i>
+                Ultimos productos Añadidos
+            </span>
+        </div>
+        <div>
+            <span>
+                <i class="fa-solid fa-hourglass-end"></i>
+                Proximos Vencimientos
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}
