@@ -10,11 +10,10 @@ html {
 main {
     display: flex;
     flex-wrap: nowrap;
+    min-height: 100vh !important;
     height: 100vh !important;
-    height: -webkit-fill-available;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
+    height: -webkit-fill-available !important;
+    overflow-x: auto !important;
 }
 
 .b-example-divider {
@@ -28,17 +27,17 @@ main {
 }
 
 .bi {
-    vertical-align: -.125em;
-    pointer-events: none;
-    fill: currentColor;
+    vertical-align: -.125em !important;
+    pointer-events: none !important;
+    fill: currentColor !important;
 }
 
 .dropdown-toggle {
-    outline: 0;
+    outline: 0 !important;
 }
 
 .nav-flush .nav-link {
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 .btn-toggle {
@@ -58,32 +57,32 @@ main {
 }
 
 .btn-toggle::before {
-    width: 1.25em;
-    line-height: 0;
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-    transition: transform .35s ease;
-    transform-origin: .5em 50%;
+    width: 1.25em !important;
+    line-height: 0 !important;
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e") !important;
+    transition: transform .35s ease !important;
+    transform-origin: .5em 50% !important;
 }
 
 .btn-toggle[aria-expanded="true"] {
-    color: rgba(0, 0, 0, .85);
+    color: rgba(0, 0, 0, .85) !important;
 }
 
 .btn-toggle[aria-expanded="true"]::before {
-    transform: rotate(90deg);
+    transform: rotate(90deg) !important;
 }
 
 .btn-toggle-nav a {
-    display: inline-flex;
-    padding: .1875rem .5rem;
-    margin-top: .125rem;
-    margin-left: 1.25rem;
-    text-decoration: none;
+    display: inline-flex !important;
+    padding: .1875rem .5rem !important;
+    margin-top: .125rem !important;
+    margin-left: 1.25rem !important;
+    text-decoration: none !important;
 }
 
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-    background-color: #d2f4ea;
+    background-color: #d2f4ea !important;
 }
 
 .scrollarea {
@@ -91,9 +90,9 @@ main {
 }
 
 .fw-semibold {
-    font-weight: 600;
+    font-weight: 600 !important;
 }
 
 .lh-tight {
-    line-height: 1.25;
+    line-height: 1.25 !important;
 }

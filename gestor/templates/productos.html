@@ -22,5 +22,38 @@
         </div>
     </div>
 </div>
+{% if productos %}
+<div class="container mt-2">
+    <div class="row justify-content-center">
+        {% for producto in productos %}
+        <div class="col-3 p-1">
+            <div class="card text-center">
+                <div class="card-body p-1">
+                    <i class="fa-solid fa-box fa-lg"></i>
+                    <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
+                    <h6 class="card-title">Marca: {{producto.marca | truncatewords:"1"}}</h6>
+                    <p class="card-text">Stock de Ingreso: {{producto.stockIng}}</p>
+                    <p class="card-text">Stock disponible: {{producto.stockDisp}}</p>
+                    <p class="card-text">Envasado: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
+                    <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger m-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- if last column in row -->
+        {% if forloop.counter is 3 %} {% if not forloop.last%}
+    </div>
+    <div class="row justify-content-center">
+        {% endif %} {% endif %} {% endfor %}
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}

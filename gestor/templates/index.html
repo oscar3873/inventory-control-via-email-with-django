@@ -9,7 +9,7 @@
                 </span>
             </div>
             <div class="card-body p-0 m-auto">
-                <a class="btn btn-block bg-success text-white w-100" href="">
+                <a class="btn btn-block bg-success text-white w-100" href="{% url 'producto_new' %}">
                     <i class="fa-solid fa-circle-plus fa-lg"></i>
                 </a>
             </div>
@@ -21,12 +21,66 @@
                 <i class="fa-solid fa-database"></i>
                 Ultimos productos Añadidos
             </span>
+            <div class="container">
+                <div class="row">
+                    {% for ult_prod in ultimos_productos %}
+                    <div class="col-3 p-1">
+                        <div class="card text-center">
+                            <div class="card-body p-1">
+                                <i class="fa-solid fa-box fa-lg"></i>
+                                <h6 class="card-title">Producto: {{ult_prod.producto | truncatewords:"1"}}</h6>
+                                <p class="card-text">Stock: {{ult_prod.stockDisp | truncatewords:"1"}}</p>
+                                <div class="d-flex justify-content-center">
+                                    <a href="{% url 'producto_update' ult_prod.id%}" class="btn btn-dark m-1">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger m-1">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- if last column in row -->
+                    {% if forloop.counter is 3 %} {% if not forloop.last%}
+                </div>
+                <div class="row">
+                    {% endif %} {% endif %} {% endfor %}
+                </div>
+            </div>
         </div>
         <div>
             <span>
                 <i class="fa-solid fa-hourglass-end"></i>
                 Proximos Vencimientos
             </span>
+            <div class="container">
+                <div class="row">
+                    {% for prod_venc in productos_a_vencer %}
+                    <div class="col-3 p-1">
+                        <div class="card text-center">
+                            <div class="card-body p-1">
+                                <i class="fa-solid fa-box fa-lg"></i>
+                                <h6 class="card-title">Producto: {{prod_venc.producto | truncatewords:"1"}}</h6>
+                                <p class="card-text">Vencimiento: {{prod_venc.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                                <div class="d-flex justify-content-center">
+                                    <a href="{% url 'producto_update' prod_venc.id%}" class="btn btn-dark m-1">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger m-1">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- if last column in row -->
+                    {% if forloop.counter is 3 %} {% if not forloop.last%}
+                </div>
+                <div class="row">
+                    {% endif %} {% endif %} {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </div>

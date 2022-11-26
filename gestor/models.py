@@ -13,7 +13,7 @@ class Producto(models.Model):
     #codStock = models.CharField('ISBN',max_length=13) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO
 
     def __str__(self):
-        return 'Marca: %s -- Tipo: %s' % (self.marca, self.nombre)
+        return 'Marca: %s -- Tipo: %s' % (self.marca, self.tipo)
 
     def prod_id (self):
         return self.pk
