@@ -23,21 +23,23 @@
             </span>
             <div class="container">
                 <div class="row justify-content-center">
-                    {% for ult_prod in ultimos_productos %}
-                    <div class="col-3 p-1">
+                    {% for producto in ultimos_productos %}
+                    <div class="p-1">
                         <div class="card text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                <h6 class="card-title">Producto: {{ult_prod.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Fecha Ingreso: {{ult_prod.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
-                                <p class="card-text">Stock: {{ult_prod.stockDisp | truncatewords:"1"}}</p>
+                                <h6 class="card-title">Producto: {{prod.producto | truncatewords:"1"}}</h6>
+                                <p class="card-text">Fecha Ingreso: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
+                                <p class="card-text">Stock: {{producto.stockDisp | truncatewords:"1"}}</p>
                                 <div class="d-flex justify-content-center">
-                                    <a href="{% url 'producto_update' ult_prod.id%}" class="btn btn-dark m-1">
+                                    <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <a href="#" class="btn btn-danger m-1">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                    <!-- <a href="#" class="btn btn-danger m-1"> -->
+                                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}"></button>
+                                        {% include 'prod_modal.html' %}
+                                        <!-- <i class="fa-solid fa-trash"></i>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -57,19 +59,22 @@
             </span>
             <div class="container">
                 <div class="row justify-content-center">
-                    {% for prod_venc in productos_a_vencer %}
-                    <div class="col-3 p-1">
+                    {% for producto in productos_a_vencer %}
+                    <div class=" p-1">
                         <div class="card text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                <h6 class="card-title">Producto: {{prod_venc.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Vencimiento: {{prod_venc.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                                <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
+                                <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
                                 <div class="d-flex justify-content-center">
-                                    <a href="{% url 'producto_update' prod_venc.id%}" class="btn btn-dark m-1">
+                                    <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <a href="#" class="btn btn-danger m-1">
-                                        <i class="fa-solid fa-trash"></i>
+                                    <!-- <a href="#" class="btn btn-danger m-1"> -->
+                                        
+                                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}"></button>
+                                        
+                                        <!-- <i class="fa-solid fa-trash"></i> -->
                                     </a>
                                 </div>
                             </div>

@@ -8,5 +8,5 @@ from crispy_forms.layout import Layout
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ('marca', 'producto', 'tipo','fechaIngreso', 'fechaVnto','stockIng', 'stockDisp')
+        fields = ('marca', 'producto', 'tipo','fechaIngreso', 'fechaVnto','stockIng', 'stockDisp','codStock')
         widgets = {'fechaIngreso': NumberInput(attrs={'type': 'date'}),'fechaVnto': NumberInput(attrs={'type': 'date'}),}

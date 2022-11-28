@@ -10,14 +10,21 @@
                 </span>
             </div>
             <div class="card-body p-0 m-auto bg-dark rounded text-white">
-                <div class="mx-5">
-                    <span>
-                        <i class="fa-solid fa-filter"></i>
-                        Buscar
-                    </span>
-                    <input class="form-control" id="myInput" type="text" placeholder="Buscar..">
-                    <br>
-                </div>
+                <form method="get">
+                    <div class="mt-1 ml-3 mb-3 mr-3">
+                        <span>
+                            <i class="fa-solid fa-filter"></i>
+                            Buscar
+                        </span>
+                        <div class="input-group ">
+                            <input class="form-control" name="myInput" type="text" placeholder="Buscar.." value="{{ request.GET.myInput }}">
+
+                                <button class="btn btn-success" type="submit">Buscar</button>
+
+                        <br>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -40,9 +47,12 @@
                         <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a href="#" class="btn btn-danger m-1">
+
+                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}"></button>
+                                        {% include 'prod_modal_vnto.html' %}
+                        <!-- <a href="#" class="btn btn-danger m-1">
                             <i class="fa-solid fa-trash"></i>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -51,9 +61,12 @@
         {% if forloop.counter is 3 %} {% if not forloop.last%}
     </div>
     <div class="row justify-content-center">
-        {% endif %} {% endif %} {% endfor %}
+        {% endif %}{% endif %}
+    {% endfor %}
+    {% else %}
+        <h4>NO HAY MARCAS NI PRODUCTOS RELACIONADOS A "{{ request.GET.myInput }}"</h4>
+        <!-- agregar boton para volver a la lista de productos -->
+    {% endif %}
     </div>
 </div>
-{% endif %}
-
 {% endblock %}

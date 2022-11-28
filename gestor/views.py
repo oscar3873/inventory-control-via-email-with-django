@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
 from gestor.forms import ProductoForm
+from django.views import generic
+from django.db.models import Q
 
 from gestor.models import Producto
 
@@ -14,11 +16,30 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-class ProductoListView(ListView):
-    model = Producto
-    context_object_name = 'productos'
-    queryset = Producto.objects.all()
-    template_name='productos.html'
+class ProductoListView(generic.ListView):
+    # model = Producto
+    # context_object_name = 'productos'
+    # queryset = Producto.objects.all()
+    # template_name='productos.html'
+
+    def producto_delete(request, pk):
+        prod = Producto.objects.get(pk=pk)
+        prod.delete()
+        return redirect('home')
+
+    def Buscar(request):
+        model = Producto
+        context_object_name = 'productos'
+        productos = Producto.objects.all()
+        template_name='productos.html'
+        busqueda= request.GET.get("myInput")
+        
+        if busqueda :
+            productos = Producto.objects.filter(
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda)
+            )
+        return render(request, 'productos.html', {'productos' : productos} )
 
 def configurar(request):
     return render(request, 'configurar.html')
@@ -35,6 +56,7 @@ def producto_new(request):
             producto.fechaVnto = formulario.cleaned_data['fechaVnto']
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockDisp']
+            producto.codStock = formulario.cleaned_data['codStock']
             producto.save()
             return redirect('productos')
     else:
@@ -49,7 +71,7 @@ def producto_update(request, pk):
             producto = formulario.save(commit=False)
             producto.nombre = formulario.cleaned_data['nombre']
             producto.save()
-            return redirect('generos')
+            return redirect('')
     else:
         formulario = ProductoForm(instance=producto)
     
