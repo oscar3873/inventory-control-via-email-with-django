@@ -28,16 +28,15 @@ class ProductoListView(generic.ListView):
         return redirect('home')
 
     def Buscar(request):
-        model = Producto
-        context_object_name = 'productos'
+
         productos = Producto.objects.all()
-        template_name='productos.html'
         busqueda= request.GET.get("myInput")
         
         if busqueda :
             productos = Producto.objects.filter(
                 Q(marca__icontains = busqueda) |
-                Q(producto__icontains = busqueda)
+                Q(producto__icontains = busqueda) |
+                Q(codigoBulto__icontains = busqueda)
             )
         return render(request, 'productos.html', {'productos' : productos} )
 
@@ -55,10 +54,13 @@ def producto_new(request):
             producto.fechaIngreso = formulario.cleaned_data['fechaIngreso']
             producto.fechaVnto = formulario.cleaned_data['fechaVnto']
             producto.stockIng = formulario.cleaned_data['stockIng']
-            producto.stockDisp = formulario.cleaned_data['stockDisp']
-            producto.codStock = formulario.cleaned_data['codStock']
+            producto.stockDisp = formulario.cleaned_data['stockIng']
+            producto.codStock = formulario.cleaned_data['codigoBulto']
             producto.save()
-            return redirect('productos')
+            
+            return redirect('home')
+        else:
+            return render(request, 'producto_new.html',{'formulario':formulario})
     else:
         formulario = ProductoForm()
     return render(request, 'producto_new.html', {'formulario': formulario})
@@ -69,9 +71,16 @@ def producto_update(request, pk):
         formulario = ProductoForm(request.POST, instance=producto)
         if formulario.is_valid():
             producto = formulario.save(commit=False)
-            producto.nombre = formulario.cleaned_data['nombre']
+            producto.marca = formulario.cleaned_data['marca']
+            producto.producto = formulario.cleaned_data['producto']
+            producto.tipo = formulario.cleaned_data['tipo']
+            producto.fechaIngreso = formulario.cleaned_data['fechaIngreso']
+            producto.fechaVnto = formulario.cleaned_data['fechaVnto']
+            producto.stockIng = formulario.cleaned_data['stockIng']
+            producto.stockDisp = formulario.cleaned_data['stockIng']
+            producto.codStock = formulario.cleaned_data['codigoBulto']
             producto.save()
-            return redirect('')
+            return redirect('home')
     else:
         formulario = ProductoForm(instance=producto)
     

@@ -34,22 +34,23 @@
     <div class="row justify-content-center">
         {% for producto in productos %}
         <div class="col-3 p-1">
-            <div class="card text-center">
+            <div class="card border-dark text-center">
                 <div class="card-body p-1">
                     <i class="fa-solid fa-box fa-lg"></i>
-                    <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                    <h6 class="card-title">Marca: {{producto.marca | truncatewords:"1"}}</h6>
-                    <p class="card-text">Stock de Ingreso: {{producto.stockIng}}</p>
-                    <p class="card-text">Stock disponible: {{producto.stockDisp}}</p>
-                    <p class="card-text">Envasado: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
-                    <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                    <h6 class="card-header"><strong>Producto: {{producto.producto | truncatewords:"1"}}</strong></h6>
+                    <h6 class="card-title"><strong>Marca:</strong> {{producto.marca | truncatewords:"1"}}</h6>
+                    <p class="card-text"><strong>Stock de Ingreso:</strong> {{producto.stockIng}}</p>
+                    <p class="card-text"><strong>Stock disponible:</strong> {{producto.stockDisp}}</p>
+                    <p class="card-text"><strong>Ingreso:</strong> {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
+                    <p class="card-text"><strong>Vencimiento:</strong> {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                    <p class="card-text"><strong>Codigo Bulto:</strong> {{producto.codigoBulto}}</p>
                     <div class="d-flex justify-content-center">
                         <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                            <i class="fa-solid fa-pen"></i>
+                            Editar
                         </a>
 
-                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}"></button>
-                                        {% include 'prod_modal_vnto.html' %}
+                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">Eliminar</button>
+                                        {% include 'prod_modal.html' %}
                         <!-- <a href="#" class="btn btn-danger m-1">
                             <i class="fa-solid fa-trash"></i>
                         </a> -->

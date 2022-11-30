@@ -38,18 +38,18 @@
                         <i class="fa-solid fa-box icon-solid"></i> Productos
                     </a>
                 </li>
-                <li class="m-2 ">
+                <!-- <li class="m-2 ">
                     <a href="#" class="nav-link text-white">
                         <i class="fa-solid fa-hourglass-start icon-solid"></i> Proximos Venc.
                     </a>
-                </li>
-                <li class="m-2 ">
+                </li> -->
+                <!-- <li class="m-2 ">
                     <a href="{% url 'configurar' %}" class="nav-link text-white">
                         <i class="fa fa-cog icon-solid" aria-hidden="true"></i> Configurar
                     </a>
-                </li>
+                </li> -->
                 <li class="m-2 ">
-                    <a href="#" class="nav-link text-white">
+                    <a href="{% url 'configurar' %}" class="nav-link text-white">
                         <i class="fa-solid fa-code"></i> Proximamente
                     </a>
                 </li>
@@ -58,13 +58,17 @@
         </div>
         <div class=".b-example-divider"></div>
         <div class="container">
-            <h2 class="text-center">Sistema de Control de Inventario</h2>
+            
+            <br>
+            <h2 class="text-center"><strong>Sistema de Control de Inventario</strong></h2>
+            <br>
             {% block content %}
             {% endblock %}
         </div>
-        {% endblock %}
+        
     </main>
     <script src="{% static 'sidebars.js' %}"></script>
+    {% endblock %}
 </body>
 
 </html>

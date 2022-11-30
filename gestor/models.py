@@ -8,9 +8,9 @@ class Producto(models.Model):
     tipo = models.CharField(max_length=30, help_text="Si corresponde, ejemplo: producto: harina | tipo: leudante / 0000 ")
     fechaIngreso = models.DateField('Fecha de Ingreso',blank=False,help_text="Fecha de Ingreso a la fabrica")
     fechaVnto = models.DateField('Fecha de Vencimiento',blank=False,help_text="Fecha que figura en el envase")
-    stockIng= models.PositiveIntegerField('Stock de ingreso',blank=False,help_text="cantidad por unidad")
+    stockIng= models.PositiveIntegerField('Stock de ingreso',blank=False,help_text="cantidad por bultos/fardos")
     stockDisp= models.PositiveIntegerField('Stock disponible',blank=False) # Para los caso de obtener-consumir la materia prima
-    codStock = models.CharField('Codigo de bulto',max_length=13,) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO
+    codigoBulto = models.CharField('Codigo de bulto',max_length=13,blank=True) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO *actualizado*
 
     def __str__(self):
         return 'Marca: %s -- Tipo: %s' % (self.marca, self.tipo)

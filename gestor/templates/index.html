@@ -5,11 +5,11 @@
             <div class="card-title">
                 <span>
                     <i class="fa-solid fa-cloud-arrow-up"></i>
-                    Agregar Producto
                 </span>
             </div>
             <div class="card-body p-0 m-auto">
                 <a class="btn btn-block bg-success text-white w-100" href="{% url 'producto_new' %}">
+                    Agregar Producto
                     <i class="fa-solid fa-circle-plus fa-lg"></i>
                 </a>
             </div>
@@ -19,27 +19,26 @@
         <div>
             <span>
                 <i class="fa-solid fa-database"></i>
-                Ultimos productos Añadidos
+                <br>
+                <div class="card border-success text-center m-1">
+                    <h3>Ultimos productos Añadidos</h3>
+                </div>
+                <br>
+                <br>
             </span>
             <div class="container">
                 <div class="row justify-content-center">
                     {% for producto in ultimos_productos %}
-                    <div class="p-1">
-                        <div class="card text-center">
+                    <div class="col-4 p-2">
+                        <div class="card border-success text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                <h6 class="card-title">Producto: {{prod.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Fecha Ingreso: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
-                                <p class="card-text">Stock: {{producto.stockDisp | truncatewords:"1"}}</p>
+                                <h5 class="card-header bg-gradient-success"><strong>Producto: {{producto.producto | truncatewords:"1"}}</strong></h5>
+                                <p class="card-text"><strong>Fecha Ingreso:</strong> {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
+                                <p class="card-text"><strong>Stock disponible:</strong> {{producto.stockDisp | truncatewords:"1"}}</p>
+                                <p class="card-text"><strong>Codigo Bulto:</strong> {{producto.codigoBulto}}</p>
                                 <div class="d-flex justify-content-center">
-                                    <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    <!-- <a href="#" class="btn btn-danger m-1"> -->
-                                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}"></button>
-                                        {% include 'prod_modal.html' %}
-                                        <!-- <i class="fa-solid fa-trash"></i>
-                                    </a> -->
+                                    
                                 </div>
                             </div>
                         </div>
@@ -55,27 +54,27 @@
         <div>
             <span>
                 <i class="fa-solid fa-hourglass-end"></i>
-                Proximos Vencimientos
+                
+                <br>
+                <div class="card border-danger text-center m-1">
+                <h3>Próximos Vencimientos</h3>
+                </div>
+                <br>
+                <br>
             </span>
             <div class="container">
                 <div class="row justify-content-center">
                     {% for producto in productos_a_vencer %}
-                    <div class=" p-1">
-                        <div class="card text-center">
+                    <div class="col-4 p-2">
+                        <div class="card border-danger text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                                <h5 class="card-header bg-gradient-danger"><strong>Producto: {{producto.producto | truncatewords:"1"}}</strong></h5>
+                                <p class="card-text text-danger"><strong> Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</strong></p>
+                                <p class="card-text"><strong>Stock disponible:</strong> {{producto.stockDisp | truncatewords:"1"}}</p>                    
+                                <p class="card-text"><strong>Codigo Bulto:</strong> {{producto.codigoBulto}}</p>
                                 <div class="d-flex justify-content-center">
-                                    <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    <!-- <a href="#" class="btn btn-danger m-1"> -->
-                                        
-                                        <button class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}"></button>
-                                        
-                                        <!-- <i class="fa-solid fa-trash"></i> -->
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
