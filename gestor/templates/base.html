@@ -3,7 +3,7 @@
 
 <head>
     {% block title %}
-    <title>Sistema Control Vencimiento</title>{% endblock %}
+    <title>Sistema de Notificación de Inventario</title>{% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 <li class="m-2 ">
-                    <a href="#" class="nav-link text-white">
+                    <a href="{% url 'vencimientos' %}" class="nav-link text-white">
                         <i class="fa-solid fa-hourglass-start icon-solid"></i> Proximos Venc.
                     </a>
                 </li>
@@ -58,7 +58,7 @@
         </div>
         <div class=".b-example-divider"></div>
         <div class="container">
-            <h2 class="text-center">Sistema de Control de Inventario</h2>
+            <h2 class="text-center">Sistema de Notificación de Inventario</h2>
             {% block content %}
             {% endblock %}
         </div>

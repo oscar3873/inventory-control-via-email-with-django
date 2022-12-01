@@ -29,7 +29,7 @@
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
                                 <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Fecha Ingreso: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
+                                <p class="card-text">Envasado: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
                                 <p class="card-text">Stock: {{producto.stockDisp | truncatewords:"1"}}</p>
                                 <div class="d-flex justify-content-center">
                                     <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
@@ -66,6 +66,7 @@
                                 <i class="fa-solid fa-box fa-lg"></i>
                                 <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
                                 <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                                <p class="card-text">Codigo: {{producto.codStock}}</p>
                                 <div class="d-flex justify-content-center">
                                     <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
                                         <i class="fa-solid fa-pen"></i>

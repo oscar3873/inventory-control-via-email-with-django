@@ -40,6 +40,31 @@ class ProductoListView(generic.ListView):
             )
         return render(request, 'productos.html', {'productos' : productos} )
 
+class VencimientoListView(generic.ListView):
+    # model = Producto
+    # context_object_name = 'productos'
+    # queryset = Producto.objects.all()
+    # template_name='productos.html'
+
+    def producto_delete(request, pk):
+        prod = Producto.objects.get(pk=pk)
+        prod.delete()
+        return redirect('home')
+
+    def Buscar(request):
+
+        productos = Producto.objects.all()
+        busqueda= request.GET.get("myInput")
+        
+        if busqueda :
+            productos = Producto.objects.filter(
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda) |
+                Q(codStock__icontains = busqueda)
+            )
+        return render(request, 'vencimientos.html', {'productos' : productos} )
+
+
 def configurar(request):
     return render(request, 'configurar.html')
 
