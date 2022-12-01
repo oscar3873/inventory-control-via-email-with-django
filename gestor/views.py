@@ -20,23 +20,43 @@ class ProductoListView(generic.ListView):
     # model = Producto
     # context_object_name = 'productos'
     # queryset = Producto.objects.all()
-    # template_name='productos.html'
+    # template_name='#.html'
 
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
         prod.delete()
         return redirect('home')
 
-    def Buscar(request):
-
-        productos = Producto.objects.all()
-        busqueda= request.GET.get("myInput")
+    def Buscar(request,busqueda=None):
         
+        productos = Producto.objects.all()
+        if busqueda!=None:
+            r = request.GET.get("myInput")
+
+            productos = Producto.objects.filter(
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda) |
+                Q(codBulto__icontains = busqueda)
+            )
+
+            if r != None:
+                productos = productos.filter(
+                    Q(marca__icontains = r) |
+                    Q(producto__icontains = r) |
+                    Q(codBulto__icontains = r)
+                )
+            context = {
+                'productos':productos ,
+                'buscado':str.upper(busqueda),
+                }
+            return render(request, 'producto_esp.html', context)
+
+        busqueda = request.GET.get("myInput")
         if busqueda :
             productos = Producto.objects.filter(
                 Q(marca__icontains = busqueda) |
                 Q(producto__icontains = busqueda) |
-                Q(codStock__icontains = busqueda)
+                Q(codBulto__icontains = busqueda)
             )
         return render(request, 'productos.html', {'productos' : productos} )
 
@@ -53,9 +73,10 @@ def producto_new(request):
             producto.tipo = formulario.cleaned_data['tipo']
             producto.fechaIngreso = formulario.cleaned_data['fechaIngreso']
             producto.fechaVnto = formulario.cleaned_data['fechaVnto']
+            producto.fechaEnvasado = formulario.cleaned_data['fechaEnvasado']
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
-            producto.codStock = formulario.cleaned_data['codStock']
+            producto.codBulto = formulario.cleaned_data['codBulto']
             producto.save()
             
             return redirect('home')
