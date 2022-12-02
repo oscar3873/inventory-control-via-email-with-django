@@ -10,7 +10,7 @@
                 </span>
             </div>
             <div class="card-body p-0 m-auto">
-                <a class="btn btn-block bg-success text-white w-100" href="{% url 'producto_new' %}">
+                <a class="btn btn-block bg-success text-white w-100" href="producto/new">
                     <i class="fa-solid fa-circle-plus fa-lg"></i>
                 </a>
             </div>
@@ -30,10 +30,10 @@
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
                                 <h6 class="card-title">Producto: 
-                                    <a href="{% url 'productos_filt' producto.producto  %}">{{producto.producto | truncatewords:"1"}}</a>  
+                                    <!-- <a href="{% url 'productos_filt' producto.producto%}">{{producto.producto | truncatewords:"1"}}</a>   -->
                                 </h6> 
                                 <h6 class="card-title">Marca: 
-                                    <a href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"1"}}</a>  
+                                    <!-- <a href="{% url 'productos_filt' producto.marca%}">{{producto.marca | truncatewords:"1"}}</a>   -->
                                 </h6> 
                                 <p class="card-text">Fecha Ingreso: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
                                 <p class="card-text">Stock: {{producto.stockDisp | truncatewords:"1"}}</p>

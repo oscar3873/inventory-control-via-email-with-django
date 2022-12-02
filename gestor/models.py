@@ -10,8 +10,9 @@ class Producto(models.Model):
     fechaEnvasado = models.DateField('Fecha de Envasado',blank=False,help_text="Fecha indicada en el envase")
     stockIng= models.PositiveIntegerField('Stock de ingreso',blank=False,help_text="Cantidad por bultos/fardos/cajas")
     stockDisp= models.PositiveIntegerField('Stock disponible',blank=False) # Para los caso de obtener-consumir la materia prima
-    codBulto = models.CharField('Codigo de Bulto',max_length=13,help_text="Codigo que figura en el bulto ",blank=True) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO
-    imagen = models.ImageField(upload_to='img/',null=True)
+    codBulto = models.CharField('Codigo de Bulto',max_length=13,help_text="Codigo que figura en el bulto ",blank=False) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO
+   
+    imagen = models.ImageField(upload_to='',null=True) # borrar el img/
 
 
     def __str__(self):
