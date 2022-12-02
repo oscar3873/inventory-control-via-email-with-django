@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 fontawesomefree = "*"
 django-crispy-forms = "*"
+pillow = "*"
 
 [dev-packages]
 

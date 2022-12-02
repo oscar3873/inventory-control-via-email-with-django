@@ -1,47 +1,56 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="d-flex flex-column">
-    <div class="d-flex flex-column justify-content align-items-center">
-        <div class="card border-0 text-center">
-            <div class="card-title">
-                <span>
-                    <i class="fa-solid fa-box"></i>
-                    Proximos Vencimientos
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'buscar.html'%}
+
+<br>
+
 {% if productos %}
 <div class="container mt-2">
     <div class="row justify-content-center">
-        {% for producto in productos %}
-        <div class="col-3 p-1">
-            <div class="card text-center">
-                <div class="card-body p-1">
-                    <i class="fa-solid fa-box fa-lg"></i>
-                    <h6 class="card-title">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</h6>
-                    <p class="card-text">Marca: {{producto.marca | truncatewords:"1"}}</p>
-                    <p class="card-text">Stock disponible: {{producto.stockDisp}}</p>
-                    <p class="card-text">Envasado: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
-                    <p class="card-text">Codigo de bulto: {{producto.codStock }}</p>
-                    <div class="d-flex justify-content-center">
-                        <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                        <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th></th>
+                        <th class="text-center">Codido de bulto</th>
+                        <th class="text-center">Producto</th>
+                        <th class="text-center">Marca</th>
+                        <th class="text-center">Stock ingreso</th>
+                        <th class="text-center">Stock disponible</th>
+                        <th class="text-center">Envasado</th>
+                        <th class="text-center">Vencimiento</th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td></td>
+                        <td class="text-center">{{producto.codStock}}</td>
+                        <td class="text-center">{{producto.producto}}</td>
+                        <td class="text-center">{{producto.marca}}</td>
+                        <td class="text-center">{{producto.stockIng}}</td>
+                        <td class="text-center">{{producto.stockDisp}}</td>
+                        <td class="text-center">{{producto.fechaIngreso | date:"d/m/Y"}}</td>
+                        <td class="text-center text-align-center"><strong>{{producto.fechaVnto | date:"d/m/Y"}}</strong></td>
+                        <td><a href="{% url 'producto_update' producto.id%}" class="btn btn-success m-1"> <i class="fa-solid fa-pen"></i> </td>
+                        <td>
+                            <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                             {% include 'prod_modal.html' %}
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <div>
+                {%include 'paginator.html' %}
             </div>
         </div>
-        <!-- if last column in row -->
-        {% if forloop.counter is 3 %} {% if not forloop.last%}
-    </div>
-    <div class="row justify-content-center">
-        {% endif %} {% endif %} {% endfor %}
     </div>
 </div>
 {% endif %}

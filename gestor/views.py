@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from gestor.models import Producto
 from gestor.forms import ProductoForm
 
+from django.core.paginator import Paginator
+from django.http import Http404
 
 def registrar(request):
     
@@ -77,49 +79,80 @@ class ProductoListView(generic.ListView):
     # context_object_name = 'productos'
     # queryset = Producto.objects.all()
     # template_name='productos.html'
-    @login_required(login_url='/signin/')
+
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
         prod.delete()
         return redirect('home')
 
-    def Buscar(request):
+#    def Buscar(request):
 
+#        productos = Producto.objects.all()
+#        busqueda= request.GET.get("myInput")
+#        
+#        if busqueda :
+#            productos = Producto.objects.filter(
+#                Q(marca__icontains = busqueda) |
+#                Q(producto__icontains = busqueda) |
+#                Q(codStock__icontains = busqueda)
+#            )
+#        return render(request, 'productos.html', {'productos' : productos} )
+    
+    def list_productos(request):
         productos = Producto.objects.all()
+        page = request.GET.get('page', 1)
         busqueda = request.GET.get("myInput")
-
-        if busqueda:
+        
+        if busqueda :
             productos = Producto.objects.filter(
-                Q(marca__icontains=busqueda) |
-                Q(producto__icontains=busqueda) |
-                Q(codStock__icontains=busqueda)
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda) |
+                Q(codStock__icontains = busqueda)
             )
-        return render(request, 'productos.html', {'productos': productos})
-
-
+            
+        try:
+            paginator = Paginator(productos, 6)
+            productos = paginator.page(page)
+        except:
+            raise Http404
+        
+        context = {
+            'productos' : productos,
+            'paginator' : paginator,
+        }
+        
+        return render(request, 'productos.html', context)
 class VencimientoListView(generic.ListView):
-    # model = Producto
-    # context_object_name = 'productos'
-    # queryset = Producto.objects.all()
-    # template_name='productos.html'
-    @login_required(login_url='/signin/')
+
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
         prod.delete()
         return redirect('home')
 
-    def Buscar(request):
-
+    def productos_vencimiento(request):
         productos = Producto.objects.all()
+        page = request.GET.get('page', 1)
         busqueda = request.GET.get("myInput")
-
-        if busqueda:
+        
+        if busqueda :
             productos = Producto.objects.filter(
-                Q(marca__icontains=busqueda) |
-                Q(producto__icontains=busqueda) |
-                Q(codStock__icontains=busqueda)
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda) |
+                Q(codStock__icontains = busqueda)
             )
-        return render(request, 'vencimientos.html', {'productos': productos})
+        
+        try:
+            paginator = Paginator(productos, 5)
+            productos = paginator.page(page)
+        except:
+            raise Http404
+        
+        context = {
+            'productos' : productos,
+            'paginator' : paginator,
+        }
+        
+        return render(request, 'vencimientos.html', context)
 
 @login_required(login_url='/signin/')
 def configurar(request):
@@ -136,14 +169,15 @@ def producto_new(request):
             producto.tipo = formulario.cleaned_data['tipo']
             producto.fechaIngreso = formulario.cleaned_data['fechaIngreso']
             producto.fechaVnto = formulario.cleaned_data['fechaVnto']
+            producto.fechaEnvasado = formulario.cleaned_data['fechaEnvasado']
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
-            producto.codStock = formulario.cleaned_data['codStock']
+            producto.codBulto = formulario.cleaned_data['codBulto']
             producto.save()
-
+            
             return redirect('home')
         else:
-            return render(request, 'producto_new.html', {'formulario': formulario})
+            return render(request, 'producto_new.html',{'formulario':formulario})
     else:
         formulario = ProductoForm()
     return render(request, 'producto_new.html', {'formulario': formulario})
@@ -169,3 +203,37 @@ def producto_update(request, pk):
         formulario = ProductoForm(instance=producto)
 
     return render(request, 'producto_new.html', {'formulario': formulario})
+
+def Buscar(request,busqueda=None):
+        
+        productos = Producto.objects.all()
+        if busqueda!=None:
+            r = request.GET.get("myInput")
+
+            productos = Producto.objects.filter(
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda) |
+                Q(codBulto__icontains = busqueda)
+            )
+
+            if r != None:
+                productos = productos.filter(
+                    Q(marca__icontains = r) |
+                    Q(producto__icontains = r) |
+                    Q(codBulto__icontains = r)
+                )
+            context = {
+                'productos':productos ,
+                'buscado':str.upper(busqueda),
+                }
+            
+
+        busqueda = request.GET.get("myInput")
+        if busqueda :
+            productos = Producto.objects.filter(
+                Q(marca__icontains = busqueda) |
+                Q(producto__icontains = busqueda) |
+                Q(codBulto__icontains = busqueda)
+            )
+        return render(request, 'productos.html', {'productos' : productos})
+    
