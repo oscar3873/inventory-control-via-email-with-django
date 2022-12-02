@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if error %}
+        <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>{{error}}</strong>
+    </div>
+{% endif %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form action="/signin/" method="post" class="card card-body text-center border-0 needs-validation" novalidate>
+            <div class="card-title">
+                <span>
+                    <i class="fa-solid fa-circle-user fa-xl"></i>
+                    Iniciar Sesion
+                </span>
+            </div>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Nombre de Usuario: </label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Ingrese su nombre de usuario..." required>
+                <div class="valid-feedback">
+                    ¡Se ve bien!
+                  </div>
+                <div class="invalid-feedback">
+                    Por favor, ingrese un nombre de usuario.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña: </label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Ingrese su contraseña..." required>
+                <div class="valid-feedback">
+                    ¡Se ve bien!
+                </div>
+                <div class="invalid-feedback">
+                    Por favor, ingrese una contraseña.
+                </div>
+            </div>
+            <button class="btn btn-dark" id="myWish">
+                    Iniciar Sesion
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

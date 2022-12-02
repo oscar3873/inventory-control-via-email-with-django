@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %} {% if error %}
+<div class="alert alert-danger" id="success-alert">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>{{error}}</strong>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form action="/registrar/" method="post" class="card card-body text-center border-0">
+            <div class="card-title">
+                <span>
+                    <i class="fa-solid fa-circle-user fa-xl"></i>
+                    Registrar
+                </span>
+            </div>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username">Nombre de Usuario: </label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Ingrese su nombre de usuario...">
+
+            </div>
+            <div class="mb-3">
+                <label for="password1">Contraseña: </label>
+                <input type="password" id="password1" name="password1" class="form-control" placeholder="Ingrese su contraseña...">
+
+            </div>
+            <div class="mb-3">
+                <label for="password2">Confirmar Contraseña: </label>
+                <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirma tu contraseña...">
+
+            </div>
+            <button class="btn btn-dark" id="myWish">
+                    Registrarse
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

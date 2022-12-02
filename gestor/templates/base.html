@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet"> {% load static %}
     <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -25,11 +26,12 @@
 <body>
     <main class="main">
         {% block sidebar %}
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark text-center" style="width: 280px;">
+            <!--   Agregar un logo generico  -->
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item m-2">
-                    <a href="{% url 'home' %}" class="nav-link active" aria-current="page">
+                    <a href="{% url 'home' %}" class="nav-link text-white" aria-current="page">
                         <i class="fa-solid fa-house icon-solid"></i> Home
                     </a>
                 </li class="m-2 ">
@@ -48,23 +50,42 @@
                         <i class="fa fa-cog icon-solid" aria-hidden="true"></i> Configurar
                     </a>
                 </li>
-                <li class="m-2 ">
-                    <a href="#" class="nav-link text-white">
-                        <i class="fa-solid fa-code"></i> Proximamente
-                    </a>
-                </li>
             </ul>
-            <hr>
+            <ul class="nav nav-pills flex-column">
+                <li>
+                    <hr class="border-white">
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item m-2">
+                        <a href="{% url 'logout' %}" class="nav-link bg-danger text-white" aria-current="page">
+                            <i class="fa fa-sign-out icon-solid"></i> Cerrar Sesion
+                        </a>
+                    </li class="m-2 ">
+                {% else %}
+                    <i class="fa-solid fa-circle-user fa-xl"></i>
+                    <li class="nav-item m-2">
+                        <a href="{% url 'registrar' %}" class="nav-link active text-white" aria-current="page">
+                            <i class="fa fa-user-plus icon-solid"></i> Registrarse
+                        </a>
+                    </li class="m-2 ">
+                    <li class="nav-item m-2">
+                        <a href="{% url 'signin' %}" class="nav-link bg-success text-white" aria-current="page">
+                            <i class="fa fa-sign-in icon-solid"></i> Iniciar Sesion
+                        </a>
+                    </li class="m-2 ">
+                {% endif %}
+            </ul>
         </div>
         <div class=".b-example-divider"></div>
         <div class="container">
             <h2 class="text-center">Sistema de Notificación de Inventario</h2>
-            {% block content %}
-            {% endblock %}
+            {% block content %} {% endblock %}
         </div>
         {% endblock %}
     </main>
     <script src="{% static 'sidebars.js' %}"></script>
+    <script src="{% static 'alerthide.js' %}"></script>
+    <script src="{% static 'validacionesform.js' %}"></script>
 </body>
 
 </html>
