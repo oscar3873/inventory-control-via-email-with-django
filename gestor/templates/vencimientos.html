@@ -6,18 +6,8 @@
             <div class="card-title">
                 <span>
                     <i class="fa-solid fa-box"></i>
-                    Productos
+                    Proximos Vencimientos
                 </span>
-            </div>
-            <div class="card-body p-0 m-auto bg-dark rounded text-white">
-                <div class="mx-5">
-                    <span>
-                        <i class="fa-solid fa-filter"></i>
-                        Buscar
-                    </span>
-                    <input class="form-control" id="myInput" type="text" placeholder="Buscar..">
-                    <br>
-                </div>
             </div>
         </div>
     </div>
@@ -27,22 +17,22 @@
     <div class="row justify-content-center">
         {% for producto in productos %}
         <div class="col-3 p-1">
-            <div class="card border-dark text-center">
+            <div class="card text-center">
                 <div class="card-body p-1">
                     <i class="fa-solid fa-box fa-lg"></i>
-                    <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                    <h6 class="card-title">Marca: {{producto.marca | truncatewords:"1"}}</h6>
-                    <p class="card-text">Stock de Ingreso: {{producto.stockIng}}</p>
+                    <h6 class="card-title">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</h6>
+                    <p class="card-text">Marca: {{producto.marca | truncatewords:"1"}}</p>
                     <p class="card-text">Stock disponible: {{producto.stockDisp}}</p>
                     <p class="card-text">Envasado: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
-                    <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                    <p class="card-text">Codigo de bulto: {{producto.codStock }}</p>
                     <div class="d-flex justify-content-center">
                         <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                            Editar
+                            <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a href="#" class="btn btn-danger m-1">
+                        <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
                             <i class="fa-solid fa-trash"></i>
-                        </a>
+                        </button>
+                            {% include 'prod_modal.html' %}
                     </div>
                 </div>
             </div>
@@ -51,12 +41,9 @@
         {% if forloop.counter is 3 %} {% if not forloop.last%}
     </div>
     <div class="row justify-content-center">
-        {% endif %}{% endif %}
-    {% endfor %}
-    {% else %}
-        <h4>NO HAY MARCAS NI PRODUCTOS RELACIONADOS A "{{ request.GET.myInput }}"</h4>
-        <!-- agregar boton para volver a la lista de productos -->
-    {% endif %}
+        {% endif %} {% endif %} {% endfor %}
     </div>
 </div>
+{% endif %}
+
 {% endblock %}
