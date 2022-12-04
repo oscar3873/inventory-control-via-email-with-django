@@ -164,9 +164,23 @@ def producto_new(request):
             for r, d, f in os.walk('.\\media'):
                 for files in f:
                     file=os.path.join(files)
-                    if str.lower(producto.producto) in str.lower(file):
-                        producto.imagen = file        # files es el nombre del archiv
-                        break
+                    print( str.lower(producto.producto) ,str.lower(file) )
+                    
+                    print(os.path.splitext(files)[0]) 
+                    if len(str.lower(producto.producto)) <= len(str.lower(os.path.splitext(files)[0])):
+                        if str.lower(producto.producto) in str.lower(os.path.splitext(files)[0]):
+                            if str.lower(producto.producto)[0] == str.lower(os.path.splitext(files)[0])[0]:
+                                producto.imagen = file      
+                                break
+                        else:
+                            producto.imagen = "unknow.png"
+                    else: 
+                        if str.lower(os.path.splitext(files)[0]) in str.lower(producto.producto):
+                            if str.lower(producto.producto)[0] == str.lower(os.path.splitext(files)[0])[0]:
+                                producto.imagen = file      
+                                break
+                        else:
+                            producto.imagen = "unknow.png"
                     
             producto.save()
 
@@ -197,9 +211,23 @@ def producto_update(request, pk):
             for r, d, f in os.walk('.\\media'):
                 for files in f:
                     file=os.path.join(files)
-                    if str.lower(producto.producto) in str.lower(file):
-                        producto.imagen = file        # files es el nombre del archiv
-                        break
+                    print( str.lower(producto.producto) ,str.lower(file) )
+                    print(os.path.splitext(files)[0]) 
+
+                    if len(str.lower(producto.producto)) <= len(str.lower(os.path.splitext(files)[0])):
+                        if str.lower(producto.producto) in str.lower(os.path.splitext(files)[0]):
+                            if str.lower(producto.producto)[0] == str.lower(os.path.splitext(files)[0])[0]:
+                                producto.imagen = file      
+                                break
+                        else:
+                            producto.imagen = "unknow.png"
+                    else: 
+                        if str.lower(os.path.splitext(files)[0]) in str.lower(producto.producto):
+                            if str.lower(producto.producto)[0] == str.lower(os.path.splitext(files)[0])[0]:
+                                producto.imagen = file      
+                                break
+                        else:
+                            producto.imagen = "unknow.png"
                     
             producto.save()
             return redirect('home')

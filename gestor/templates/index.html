@@ -30,11 +30,7 @@
                         <div class="card bg-dark text-white shadow border-0 border-light text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                {% if producto.imagen %}
                                 <div><img class="img-fluid" style="width: 100px; height: 80px" src="{{producto.imagen.url}}"></div>
-                                {% else %}
-                                <div><img class="img-fluid" style="width: 100px; height: 80px" src="https://cdn.icon-icons.com/icons2/1462/PNG/512/120nophoto_100007.png"></div>
-                                {% endif %}
                                 <h6 class="card-title">
                                     <span>Producto:<br></span>
                                     <a href="{% url 'productos_filt' producto.producto  %}">{{producto.producto | truncatewords:"1"}}</a>
@@ -68,12 +64,7 @@
                         <div class="card bg-dark text-white shadow border-light text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                {% if producto.imagen %}
                                 <div><img class="img-fluid" style="width: 100px; height: 80px" src="{{producto.imagen.url}}"></div>
-                                {% else %}
-                                <div><img class="img-fluid" style="width: 100px; height: 80px" src="https://cdn.icon-icons.com/icons2/1462/PNG/512/120nophoto_100007.png">
-                                </div>
-                                {% endif %}
                                 <h6 class="card-title">
                                     <span>Producto:<br></span>
                                     <a href="{% url 'productos_filt' producto.producto %}">{{producto.producto | truncatewords:"1"}}</a>
