@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
-import os
+
 from django.views.generic.list import ListView
 from django.views import generic
 
@@ -80,8 +80,20 @@ class ProductoListView(generic.ListView):
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
         prod.delete()
-        return redirect('home')
+        return redirect('productos')
 
+#    def Buscar(request):
+
+#        productos = Producto.objects.all()
+#        busqueda= request.GET.get("myInput")
+#        
+#        if busqueda :
+#            productos = Producto.objects.filter(
+#                Q(marca__icontains = busqueda) |
+#                Q(producto__icontains = busqueda) |
+#                Q(codStock__icontains = busqueda)
+#            )
+#        return render(request, 'productos.html', {'productos' : productos} )
     
     def list_productos(request):
 
@@ -93,7 +105,7 @@ class ProductoListView(generic.ListView):
             productos = Producto.objects.filter(
                 Q(marca__icontains = busqueda) |
                 Q(producto__icontains = busqueda) |
-                Q(codBulto__icontains = busqueda)
+                Q(codStock__icontains = busqueda)
             )
             
         try:
@@ -114,8 +126,8 @@ class VencimientoListView(generic.ListView):
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
         prod.delete()
-        return redirect('home')
-
+        return redirect('vencimientos')
+        
     def productos_vencimiento(request):
         productos = Producto.objects.all()
         page = request.GET.get('page', 1)
@@ -125,7 +137,7 @@ class VencimientoListView(generic.ListView):
             productos = Producto.objects.filter(
                 Q(marca__icontains = busqueda) |
                 Q(producto__icontains = busqueda) |
-                Q(codBulto__icontains = busqueda)
+                Q(codStock__icontains = busqueda)
             )
         
         try:
@@ -160,15 +172,6 @@ def producto_new(request):
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
             producto.codBulto = formulario.cleaned_data['codBulto']
-            
-
-            # for r, d, f in os.walk('.\\media'):
-            #     for files in f:
-            #         file=os.path.join(files)
-            #         if str.lower(producto.producto) in str.lower(file):
-            #             producto.imagen = file        # files es el nombre del archiv
-            #             break
-                    
             producto.save()
 
             
@@ -193,15 +196,7 @@ def producto_update(request, pk):
             producto.fechaVnto = formulario.cleaned_data['fechaVnto']
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
-            producto.codBulto = formulario.cleaned_data['codBulto']
-
-            # for r, d, f in os.walk('.\\media'):
-            #     for files in f:
-            #         file=os.path.join(files)
-            #         if str.lower(producto.producto) in str.lower(file):
-            #             producto.imagen = file        # files es el nombre del archiv
-            #             break
-
+            producto.codStock = formulario.cleaned_data['codStock']
             producto.save()
             return redirect('home')
     else:
@@ -231,7 +226,7 @@ def Buscar(request,busqueda=None):
                 'productos':productos ,
                 'buscado':str.upper(busqueda),
                 }
-            return render(request, 'producto_esp.html', context)
+            
 
         busqueda = request.GET.get("myInput")
         if busqueda :

@@ -29,6 +29,7 @@ class ProductoForm(forms.ModelForm):
         fechaVnto = self.cleaned_data.get('fechaVnto')
         fechaEnvasado = self.cleaned_data.get('fechaEnvasado')
         stockIng = self.cleaned_data.get('stockIng')
+        # stockDisp = self.cleaned_data.get('stockIng')
         codigoBulto = self.cleaned_data.get('codBulto')
         
         if type(marca)==type(None):
@@ -57,14 +58,22 @@ class ProductoForm(forms.ModelForm):
             if fechaIngreso<fechaEnvasado:
                 self._errors['fechaEnvasado'] = self.error_class(['La fecha de envasado debe ser anterior a la del ingreso.'])
 
-        if fechaVnto!=None:
-            if fechaVnto<=datetime.date.today():
-                self._errors['fechaVnto'] = self.error_class(['No es posible cargar producto vencido.'])
+        if fechaVnto<=datetime.date.today():
+            self._errors['fechaVnto'] = self.error_class(['No es posible cargar producto vencido.'])
     
         if type(stockIng) == type(None):
             self._errors['stockIng'] = self.error_class(['Campo obligatorio.'])
         elif stockIng <= 0:
             self._errors['stockIng'] = self.error_class(['El numero ingresado debe ser mayor a cero.'])
+
+        # if type(stockDisp) == type(None):
+        #     self._errors['stockDisp'] = self.error_class(['Campo obligatorio.'])
+        # elif stockDisp <= 0:
+        #     self._errors['stockDisp'] = self.error_class(['El numero ingresado debe ser mayor a cero.'])
+
+        # if type(stockIng) != type(None) and type(stockDisp) != type(None):
+        #     if stockIng < stockDisp:
+        #         self._errors['stockDisp'] = self.error_class(['El stock disponible debe ser menor o igual al stock de ingreso.'])
 
         if type(codigoBulto) == type(None):
             self._errors['codigoBulto'] = self.error_class(['Campo obligatorio.'])

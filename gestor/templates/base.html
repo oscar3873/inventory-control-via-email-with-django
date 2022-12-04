@@ -26,8 +26,12 @@
 <body>
     <main class="main">
         {% block sidebar %}
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark text-center" style="width: 280px;">
+        <div class="shadow-lg border-0 border-light d-flex flex-column flex-shrink-0 p-3 text-white bg-dark text-center" style="width: 280px;">
             <!--   Agregar un logo generico  -->
+            {% load static %}
+            <div>
+                <img class="img-fluid " src="{% static 'logo.png' %}" width="50px" alt="">
+            </div>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item m-2">
@@ -45,34 +49,36 @@
                         <i class="fa-solid fa-hourglass-start icon-solid"></i> Proximos Venc.
                     </a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="m-2 ">
                     <a href="{% url 'configurar' %}" class="nav-link text-white">
                         <i class="fa fa-cog icon-solid" aria-hidden="true"></i> Configurar
                     </a>
                 </li>
+                {% endif %}
             </ul>
             <ul class="nav nav-pills flex-column">
                 <li>
                     <hr class="border-white">
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item m-2">
-                        <a href="{% url 'logout' %}" class="nav-link bg-danger text-white" aria-current="page">
-                            <i class="fa fa-sign-out icon-solid"></i> Cerrar Sesion
-                        </a>
-                    </li class="m-2 ">
+                <li class="nav-item m-2">
+                    <a href="{% url 'logout' %}" class="nav-link bg-danger text-white" aria-current="page">
+                        <i class="fa fa-sign-out icon-solid"></i> Cerrar Sesion
+                    </a>
+                </li class="m-2 ">
                 {% else %}
-                    <i class="fa-solid fa-circle-user fa-xl"></i>
-                    <li class="nav-item m-2">
-                        <a href="{% url 'registrar' %}" class="nav-link active text-white" aria-current="page">
-                            <i class="fa fa-user-plus icon-solid"></i> Registrarse
-                        </a>
-                    </li class="m-2 ">
-                    <li class="nav-item m-2">
-                        <a href="{% url 'signin' %}" class="nav-link bg-success text-white" aria-current="page">
-                            <i class="fa fa-sign-in icon-solid"></i> Iniciar Sesion
-                        </a>
-                    </li class="m-2 ">
+                <i class="fa-solid fa-circle-user fa-xl"></i>
+                <li class="nav-item m-2">
+                    <a href="{% url 'registrar' %}" class="nav-link bg-light text-dark" aria-current="page">
+                        <i class="fa fa-user-plus icon-solid"></i> Registrarse
+                    </a>
+                </li class="m-2 ">
+                <li class="nav-item m-2">
+                    <a href="{% url 'signin' %}" class="nav-link bg-success text-white" aria-current="page">
+                        <i class="fa fa-sign-in icon-solid"></i> Iniciar Sesion
+                    </a>
+                </li class="m-2 ">
                 {% endif %}
             </ul>
         </div>
