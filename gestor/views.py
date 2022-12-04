@@ -161,11 +161,11 @@ def producto_new(request):
             producto.stockDisp = formulario.cleaned_data['stockIng']
             producto.codBulto = formulario.cleaned_data['codBulto']
 
-            for f in os.walk('.\\media'):
+            for r, d, f in os.walk('.\\media'):
                 for files in f:
                     file=os.path.join(files)
                     if str.lower(producto.producto) in str.lower(file):
-                        producto.imagen = file       
+                        producto.imagen = file        # files es el nombre del archiv
                         break
                     
             producto.save()
@@ -194,18 +194,12 @@ def producto_update(request, pk):
             producto.stockDisp = formulario.cleaned_data['stockIng']
             producto.codBulto = formulario.cleaned_data['codBulto']
 
-            for r,d,f in os.walk('.\\media'):
+            for r, d, f in os.walk('.\\media'):
                 for files in f:
                     file=os.path.join(files)
-                    prod = str.lower(producto.producto)
-                    archivo = str.lower(file)
-                    if len(prod) <= len(archivo):
-                        if prod in archivo:
-                            producto.imagen = file       
-                            break
-                    elif archivo in prod:
-                            producto.imagen = file       
-                            break
+                    if str.lower(producto.producto) in str.lower(file):
+                        producto.imagen = file        # files es el nombre del archiv
+                        break
                     
             producto.save()
             return redirect('home')
