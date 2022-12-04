@@ -1,4 +1,5 @@
 from importlib.abc import Finder
+import os
 from django.db import IntegrityError
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -81,19 +82,6 @@ class ProductoListView(generic.ListView):
         prod = Producto.objects.get(pk=pk)
         prod.delete()
         return redirect('productos')
-
-#    def Buscar(request):
-
-#        productos = Producto.objects.all()
-#        busqueda= request.GET.get("myInput")
-#        
-#        if busqueda :
-#            productos = Producto.objects.filter(
-#                Q(marca__icontains = busqueda) |
-#                Q(producto__icontains = busqueda) |
-#                Q(codStock__icontains = busqueda)
-#            )
-#        return render(request, 'productos.html', {'productos' : productos} )
     
     def list_productos(request):
 
@@ -172,6 +160,14 @@ def producto_new(request):
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
             producto.codBulto = formulario.cleaned_data['codBulto']
+
+            for f in os.walk('.\\media'):
+                for files in f:
+                    file=os.path.join(files)
+                    if str.lower(producto.producto) in str.lower(file):
+                        producto.imagen = file       
+                        break
+                    
             producto.save()
 
             
@@ -197,6 +193,20 @@ def producto_update(request, pk):
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
             producto.codBulto = formulario.cleaned_data['codBulto']
+
+            for r,d,f in os.walk('.\\media'):
+                for files in f:
+                    file=os.path.join(files)
+                    prod = str.lower(producto.producto)
+                    archivo = str.lower(file)
+                    if len(prod) <= len(archivo):
+                        if prod in archivo:
+                            producto.imagen = file       
+                            break
+                    elif archivo in prod:
+                            producto.imagen = file       
+                            break
+                    
             producto.save()
             return redirect('home')
     else:
