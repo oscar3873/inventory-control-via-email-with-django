@@ -105,7 +105,7 @@ class ProductoListView(generic.ListView):
             productos = Producto.objects.filter(
                 Q(marca__icontains = busqueda) |
                 Q(producto__icontains = busqueda) |
-                Q(codStock__icontains = busqueda)
+                Q(codBulto__icontains = busqueda)
             )
             
         try:
@@ -137,7 +137,7 @@ class VencimientoListView(generic.ListView):
             productos = Producto.objects.filter(
                 Q(marca__icontains = busqueda) |
                 Q(producto__icontains = busqueda) |
-                Q(codStock__icontains = busqueda)
+                Q(codBulto__icontains = busqueda)
             )
         
         try:
@@ -196,7 +196,7 @@ def producto_update(request, pk):
             producto.fechaVnto = formulario.cleaned_data['fechaVnto']
             producto.stockIng = formulario.cleaned_data['stockIng']
             producto.stockDisp = formulario.cleaned_data['stockIng']
-            producto.codStock = formulario.cleaned_data['codStock']
+            producto.codBulto = formulario.cleaned_data['codBulto']
             producto.save()
             return redirect('home')
     else:
