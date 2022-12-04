@@ -1,3 +1,4 @@
+import datetime
 import html
 from django import forms
 from gestor.models import Producto
@@ -12,8 +13,12 @@ class ProductoForm(forms.ModelForm):
 
     class Meta:
         model = Producto
-        fields = ('marca', 'producto', 'tipo','fechaIngreso', 'fechaVnto','stockIng','codStock')
-        widgets = {'fechaIngreso': NumberInput(attrs={'type': 'date'}),'fechaVnto': NumberInput(attrs={'type': 'date'}),}
+        fields = ('marca', 'producto', 'tipo','fechaIngreso','fechaEnvasado', 'fechaVnto','stockIng','codBulto')
+        widgets = {
+            'fechaIngreso': NumberInput(attrs={'type': 'date'}),
+            'fechaVnto': NumberInput(attrs={'type': 'date'}),
+            'fechaEnvasado': NumberInput(attrs={'type': 'date'}),
+            }
 
     def clean(self):
         """ super(ProductoForm, self).clean() """
@@ -22,10 +27,11 @@ class ProductoForm(forms.ModelForm):
         tipo = self.cleaned_data.get('tipo')
         fechaIngreso = self.cleaned_data.get('fechaIngreso')
         fechaVnto = self.cleaned_data.get('fechaVnto')
+        fechaEnvasado = self.cleaned_data.get('fechaEnvasado')
         stockIng = self.cleaned_data.get('stockIng')
         # stockDisp = self.cleaned_data.get('stockIng')
-        codigoBulto = self.cleaned_data.get('codStock')
-
+        codigoBulto = self.cleaned_data.get('codBulto')
+        
         if type(marca)==type(None):
             self._errors['marca'] = self.error_class(['Campo obligatorio.'])
 
@@ -38,13 +44,23 @@ class ProductoForm(forms.ModelForm):
         if fechaIngreso==None:
             self._errors['fechaIngreso'] = self.error_class(['Campo obligatorio.'])
 
+        if fechaEnvasado==None:
+            self._errors['fechaEnvasado'] = self.error_class(['Campo obligatorio.'])
+
         if fechaVnto==None:
             self._errors['fechaVnto'] = self.error_class(['Campo obligatorio.'])
 
         if fechaIngreso!=None and fechaVnto!=None:
             if fechaVnto<fechaIngreso:
-                self._errors['fechaVnto'] = self.error_class(['La fecha de vencimiento debe ser mayor a la del ingreso.'])
+                self._errors['fechaVnto'] = self.error_class(['La fecha de vencimiento debe ser posterior a la del ingreso.'])
 
+        if fechaIngreso!=None and fechaEnvasado!=None:
+            if fechaIngreso<fechaEnvasado:
+                self._errors['fechaEnvasado'] = self.error_class(['La fecha de envasado debe ser anterior a la del ingreso.'])
+
+        if fechaVnto<=datetime.date.today():
+            self._errors['fechaVnto'] = self.error_class(['No es posible cargar producto vencido.'])
+    
         if type(stockIng) == type(None):
             self._errors['stockIng'] = self.error_class(['Campo obligatorio.'])
         elif stockIng <= 0:

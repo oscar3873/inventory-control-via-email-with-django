@@ -1,0 +1,29 @@
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content align-items-center">
+        <div class="card border-0 text-center">
+            <div class="card-title">
+                <span>
+                    <i class="fa-solid fa-box"></i>
+                    Productos
+                </span>
+            </div>
+            <div class="card-body p-0 m-auto bg-dark shadow border-0 border-light rounded rounded text-white">
+                <form method="get">
+                    <div class="mt-1 ml-3 mb-3 mr-3">
+                        <span>
+                            <i class="fa-solid fa-filter"></i>
+                            Buscar
+                        </span>
+                        <div class="input-group ">
+                            <input class="form-control" name="myInput" type="text" placeholder="Buscar.." value="{{ request.GET.myInput }}">
+
+                                <button class="btn btn-success" type="submit">Buscar</button>
+
+                        <br>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

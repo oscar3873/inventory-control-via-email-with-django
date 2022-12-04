@@ -1,47 +1,50 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="d-flex flex-column">
     <div class="d-flex flex-column justify-content align-items-center">
+        {% if user.is_authenticated %}
         <div class="card border-0">
             <div class="card-title">
                 <span>
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    Agregar Producto
-                </span>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        Agregar Producto
+                    </span>
             </div>
             <div class="card-body p-0 m-auto">
-                <a class="btn btn-block bg-success text-white w-100" href="{% url 'producto_new' %}">
+                <a class="btn btn-block bg-success text-white w-100" href="producto/new">
                     <i class="fa-solid fa-circle-plus fa-lg"></i>
                 </a>
             </div>
         </div>
+        {% endif %}
     </div>
     <div class="d-flex justify-content-around text-center">
         <div>
-            <span>
+            <span class="d-block mb-2">
                 <i class="fa-solid fa-database"></i>
                 Ultimos productos Añadidos
             </span>
             <div class="container">
                 <div class="row justify-content-center">
                     {% for producto in ultimos_productos %}
-                    <div class=" p-1">
-                        <div class="card text-center">
+                    <div class=" m-2">
+                        <div class="card bg-dark text-white shadow border-0 border-light text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Envasado: {{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
+                                {% if producto.imagen %}
+                                <div><img class="img-fluid" style="width: 100px; height: 60px" src="{{producto.imagen.url}}"></div>
+                                {% else %}
+                                <div><img class="img-fluid" style="width: 100px; height: 60px" src="https://cdn.icon-icons.com/icons2/1462/PNG/512/120nophoto_100007.png"></div>
+                                {% endif %}
+                                <h6 class="card-title">
+                                    <span>Producto:<br></span>
+                                    <a href="{% url 'productos_filt' producto.producto  %}">{{producto.producto | truncatewords:"1"}}</a>
+                                </h6>
+                                <h6 class="card-title">
+                                    <span>Marca:<br></span>
+                                    <a href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"1"}}</a>
+                                </h6>
+                                <p class="card-text">Fecha Ingreso:<br>{{producto.fechaIngreso | date:"SHORT_DATE_FORMAT"}}</p>
                                 <p class="card-text">Stock: {{producto.stockDisp | truncatewords:"1"}}</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                        {% include 'prod_modal.html' %}
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -54,29 +57,34 @@
             </div>
         </div>
         <div>
-            <span>
+            <span class="d-block mb-2">
                 <i class="fa-solid fa-hourglass-end"></i>
                 Proximos Vencimientos
             </span>
             <div class="container">
                 <div class="row justify-content-center">
                     {% for producto in productos_a_vencer %}
-                    <div class=" p-1">
-                        <div class="card text-center">
+                    <div class=" m-2">
+                        <div class="card bg-dark text-white shadow border-light text-center">
                             <div class="card-body p-1">
                                 <i class="fa-solid fa-box fa-lg"></i>
-                                <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                                <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
-                                <p class="card-text">Codigo: {{producto.codStock}}</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                        {% include 'prod_modal.html' %}
-                                </div>
+                                {% if producto.imagen %}
+                                <div><img class="img-fluid" style="width: 100px; height: 60px" src="{{producto.imagen.url}}"></div>
+                                {% else %}
+                                <img class="img-fluid" style="width: 100px; height: 60px" src="https://cdn.icon-icons.com/icons2/1462/PNG/512/120nophoto_100007.png">
+                                {% endif %}
+                                <h6 class="card-title">
+                                    <span>Producto:<br></span>
+                                    <a href="{% url 'productos_filt' producto.producto %}">{{producto.producto | truncatewords:"1"}}</a>
+                                </h6>
+                                <h6 class="card-title">
+                                    <span>Marca:<br></span>
+                                    <a href="{% url 'productos_filt' producto.marca %}">{{producto.marca | truncatewords:"1"}}</a>
+                                </h6>
+                                <p class="card-text">
+                                    <span>Vencimiento:<br></span> {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}</p>
+                                <p class="card-text">
+                                    <span>Stock:</span> {{producto.stockDisp | truncatewords:"1"}}</p>
                             </div>
                         </div>
                     </div>

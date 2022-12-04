@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
-{% block content %}
-{% if error %}
-        <div class="alert alert-success" id="success-alert">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong>{{error}}</strong>
-    </div>
+{% extends 'base.html' %} {% block content %} {% if error %}
+<div class="alert alert-success" id="success-alert">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>{{error}}</strong>
+</div>
 {% endif %}
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <form action="/signin/" method="post" class="card card-body text-center border-0 needs-validation" novalidate>
+<div class="row m-2">
+    <div class="col-md-4 offset-md-4 shadow border-0  border-light rounded">
+        <form action="/signin/" method="post" class=" card card-body text-center border-0 needs-validation" novalidate>
             <div class="card-title">
                 <span>
                     <i class="fa-solid fa-circle-user fa-xl"></i>
@@ -18,17 +16,17 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="username" class="form-label">Nombre de Usuario: </label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Ingrese su nombre de usuario..." required>
+                <input type="text" id="username" name="username" class="form-control shadow-sm border-light" placeholder="Ingrese su nombre de usuario..." required>
                 <div class="valid-feedback">
                     ¡Se ve bien!
-                  </div>
+                </div>
                 <div class="invalid-feedback">
                     Por favor, ingrese un nombre de usuario.
                 </div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña: </label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Ingrese su contraseña..." required>
+                <input type="password" id="password" name="password" class="form-control shadow-sm border-light" placeholder="Ingrese su contraseña..." required>
                 <div class="valid-feedback">
                     ¡Se ve bien!
                 </div>
@@ -36,7 +34,7 @@
                     Por favor, ingrese una contraseña.
                 </div>
             </div>
-            <button class="btn btn-dark" id="myWish">
+            <button class="btn btn-dark shadow border-0 border-light" id="myWish">
                     Iniciar Sesion
             </button>
         </form>

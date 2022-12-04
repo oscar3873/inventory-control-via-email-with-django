@@ -96,3 +96,15 @@ main {
 .lh-tight {
     line-height: 1.25 !important;
 }
+
+.neumorphism {
+    -webkit-border-radius: 50px !important;
+    border-radius: 50px !important;
+    background: #2d2d67 !important;
+    -webkit-box-shadow: 12px 12px 24px #262658, -12px -12px 24px #343476 !important;
+    box-shadow: 12px 12px 24px #262658, -12px -12px 24px #343476 !important;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
