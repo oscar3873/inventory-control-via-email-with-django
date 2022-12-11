@@ -8,6 +8,7 @@ django = "*"
 fontawesomefree = "*"
 django-crispy-forms = "*"
 pillow = "*"
+django-bootstrap-v5 = "*"
 
 [dev-packages]
 
