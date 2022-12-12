@@ -20,42 +20,42 @@
 
     <div class="row g-3 my-4">
         <div class="col-md-3">
-            <div class="p-3 bg-light shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">720</h5>
                     <p class="">Productos</p>
                 </div>
-                <i class="fas fa-gift fs-1 text-success p-3"></i>
+                <i class="fa-solid fa-box fs-1 text-dark p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="p-3 bg-light shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">4920</h5>
                     <p class="">Vencidos</p>
                 </div>
-                <i class="fas fa-hand-holding-usd fs-1 text-success p-3"></i>
+                <i class="fas fa-hourglass-end fs-1 text-dark p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="p-3 bg-light shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">3899</h5>
                     <p class="">Entregados</p>
                 </div>
-                <i class="fas fa-truck fs-1 text-success p-3"></i>
+                <i class="fas fa-truck fs-1 text-dark p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="p-3 bg-light shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">%25</h5>
                     <p class="">Ingresos</p>
                 </div>
-                <i class="fas fa-chart-line fs-1 text-success p-3"></i>
+                <i class="fas fa-chart-line fs-1 text-dark p-3"></i>
             </div>
         </div>
     </div>
@@ -70,18 +70,18 @@
                 <div class="row justify-content-center">
                     {% for producto in ultimos_productos %}
                     <div class="col m-2" style="width: 150px; height: 150px; max-width:150px;">
-                        <div class="card bg-light shadow-sm border-0 border-light text-center">
+                        <div class="card bg-light shadow border-0 border-light text-center">
                             <div class="card-body p-1"> 
                                 <div>
                                     <img class="img-fluid" style="width: 50px; height: 40px" src="{{producto.imagen.url}}">
                                 </div>
                                 <h6 class="card-title">
                                     <span>Producto:<br></span>
-                                    <a href="{% url 'productos_filt' producto.producto  %}">{{producto.producto | truncatewords:"2"}}</a>
+                                    <a class="text-decoration-none" href="{% url 'productos_filt' producto.producto  %}">{{producto.producto | truncatewords:"2"}}</a>
                                 </h6>
                                 <h6 class="card-title">
                                     <span>Marca:<br></span>
-                                    <a href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                                    <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
                                 </h6>
                             </div>
                         </div>
@@ -103,16 +103,17 @@
                 <div class="row justify-content-center">
                     {% for producto in productos_a_vencer %}
                     <div class="col m-2" style="width: 150px; height: 150px; max-width:150px;">
-                        <div class="card bg-light shadow-sm border-light text-center">
+                        <div class="card bg-light shadow border-light text-center">
                             <div class="card-body p-1">
                                 <div><img class="img-fluid" style="width: 50px; height: 40px" src="{{producto.imagen.url}}"></div>
                                 <h6 class="card-title">
                                     <span>Producto:<br></span>
-                                    <a href="{% url 'productos_filt' producto.producto %}">{{producto.producto | truncatewords:"1"}}</a>
+                                    <a class="text-decoration-none" href="{% url 'productos_filt' producto.producto %}">{{producto.producto | truncatewords:"1"}}</a>
                                 </h6>
-                                <p class="card-text">
-                                    <span>Vencimiento:<br></span> {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}
-                                </p>
+                                <h6 class="card-title">
+                                    <span>Vencimiento:<br></span>
+                                    {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}
+                                </h6>
                             </div>
                         </div>
                     </div>
