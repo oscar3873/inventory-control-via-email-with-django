@@ -21,13 +21,13 @@
     <main class="d-flex bg-white" id="wrapper">
         {% block sidebar %}
         <!-- Sidebar -->
-        <div class="bg-dark text-white" id="sidebar-wrapper">
+        <div class="bg-primary text-white shadow-lg" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 fs-4 text-uppercase"><i class="fa-solid fa-globe me-2 fa-lg"></i></div>
             <div class="my-1 text-white" style="width: 15rem;">
                 <ul class="nav nav-pills flex-column text-left align-content-center">
                     <li class="m-2 ">
                         <a href="{% url 'home' %}" class="nav-link text-white">
-                            <div>        
+                            <div>
                                 <i class="fa-solid fa-gauge me-2"></i>
                                 <span>Dashboard</span>
                             </div>
@@ -77,7 +77,7 @@
         <!-- Page Content -->
 
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light py-4 px-4 shadow">
+            <nav class="navbar navbar-expand-lg navbar-light bg-primary text-white py-2 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-bars me-4" id="menu-toggle" onclick="togleed()"></i>
                     <h4 class="title">Sistema de Control de Stock</h4>
@@ -92,14 +92,13 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                         <li><a href="{% url 'signin' %}" class="btn btn-success btn" aria-current="page">Iniciar Sesion</a></li>
                     </ul>
-                    {% endif %}
-                    {% if user.is_authenticated %}
+                    {% endif %} {% if user.is_authenticated %}
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown mx-4">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user me-2"></i>John Doe
                             </a>
-                            <ul class="dropdown-menu text-center bg-dark" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu text-center bg-primary" aria-labelledby="navbarDropdown">
                                 <li><a href="{% url 'configurar' %}" class=" btn text-white" href="#">Configurar</a></li>
                                 <li><a href="{% url 'logout' %}" class="btn btn-sm btn-danger text-white" href="#">Cerrar Sesion</a></li>
                             </ul>
@@ -108,17 +107,85 @@
                     {% endif %}
                 </div>
             </nav>
+            <header class="navbar navbar-expand-lg navbar-light bg-light py-2 px-4 shadow">
+                <a href="{% url 'home' %}" class="nav-link">
+                    <div>
+                        <i class="fas fa-home me-2"></i>
+                        <span>Dashboard</span>
+                    </div>
+
+                </a>
+            </header>
             {% block content %} {% endblock %}
         </div>
         {% endblock %}
     </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         var el = document.getElementById("wrapper");
 
         function togleed() {
             el.classList.toggle("toggled");
         };
+    </script>
+    <script>
+        const ctx = document.getElementById('barras');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                datasets: [{
+                    label: 'Cantidad de productos',
+                    data: [10, 5, 4, 2, 9, 10, 3, 5, 6, 7, 9, 4],
+                    borderWidth: 1,
+                    backgroundColor: '#0D6EFD',
+                }, {
+                    label: 'Productos Vencidos',
+                    data: [2, 3, 4, 2, 3, 0, 1],
+                    borderWidth: 1,
+                    backgroundColor: '#DC3545',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx2 = document.getElementById("chart");
+
+        var oilData = {
+            labels: [
+                "Gasesoa",
+                "Harina",
+                "Sal",
+                "Azucar",
+                "Manteca"
+            ],
+            datasets: [{
+                data: [2, 3, 3, 5, 4],
+                backgroundColor: [
+                    "#FF6384",
+                    "#63FF84",
+                    "#84FF63",
+                    "#8463FF",
+                    "#6384FF"
+                ]
+            }]
+        };
+
+        var pieChart = new Chart(ctx2, {
+            type: 'pie',
+            data: oilData
+        });
     </script>
 </body>
 

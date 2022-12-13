@@ -1,8 +1,8 @@
 {% extends "base.html" %} {% block content %}
 <div class="d-flex flex-column p-4">
-    <div class="d-flex flex-column justify-content align-items-center">
-        {% if user.is_authenticated %}
-        <div class="card border-0">
+    {% if user.is_authenticated %}
+    <div class="d-flex p-4 justify-content align-items-center shadow-lg bg-light">
+        <div class="card border-0 bg-light">
             <div class="card-title">
                 <span>
                         <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -10,13 +10,13 @@
                     </span>
             </div>
             <div class="card-body p-0 m-auto">
-                <a class="btn btn-block bg-success text-white w-100" href="producto/new">
+                <a class="btn btn-block bg-primary shadow text-white w-100" href="producto/new">
                     <i class="fa-solid fa-circle-plus fa-lg"></i>
                 </a>
             </div>
         </div>
-        {% endif %}
     </div>
+    {% endif %}
 
     <div class="row g-3 my-4">
         <div class="col-md-3">
@@ -25,7 +25,7 @@
                     <h5 class="">720</h5>
                     <p class="">Productos</p>
                 </div>
-                <i class="fa-solid fa-box fs-1 text-dark p-3"></i>
+                <i class="fa-solid fa-box fs-1 text-primary p-3"></i>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                     <h5 class="">4920</h5>
                     <p class="">Vencidos</p>
                 </div>
-                <i class="fas fa-hourglass-end fs-1 text-dark p-3"></i>
+                <i class="fas fa-hourglass-end fs-1 text-primary p-3"></i>
             </div>
         </div>
 
@@ -45,7 +45,7 @@
                     <h5 class="">3899</h5>
                     <p class="">Entregados</p>
                 </div>
-                <i class="fas fa-truck fs-1 text-dark p-3"></i>
+                <i class="fas fa-truck fs-1 text-primary p-3"></i>
             </div>
         </div>
 
@@ -55,76 +55,46 @@
                     <h5 class="">%25</h5>
                     <p class="">Ingresos</p>
                 </div>
-                <i class="fas fa-chart-line fs-1 text-dark p-3"></i>
+                <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
             </div>
         </div>
     </div>
 
-    <div class="d-flex justify-content-around text-center">
-        <div>
-            <span class="d-block mb-2">
-                <i class="fa-solid fa-database"></i>
-                Ultimos productos Añadidos
-            </span>
-            <div class="card-deck">
-                <div class="row justify-content-center">
-                    {% for producto in ultimos_productos %}
-                    <div class="col m-2" style="width: 150px; height: 150px; max-width:150px;">
-                        <div class="card bg-light shadow border-0 border-light text-center">
-                            <div class="card-body p-1"> 
-                                <div>
-                                    <img class="img-fluid" style="width: 50px; height: 40px" src="{{producto.imagen.url}}">
-                                </div>
-                                <h6 class="card-title">
-                                    <span>Producto:<br></span>
-                                    <a class="text-decoration-none" href="{% url 'productos_filt' producto.producto  %}">{{producto.producto | truncatewords:"2"}}</a>
-                                </h6>
-                                <h6 class="card-title">
-                                    <span>Marca:<br></span>
-                                    <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- if last column in row -->
-                    {% if forloop.counter is 3 %} {% if not forloop.last%}
+        <div class="row g-3 my-4">
+            <div class="col-6">
+                <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                    <canvas id="barras"></canvas>
                 </div>
-                <div class="row justify-content-center">
-                    {% endif %} {% endif %} {% endfor %}
+                <div class="my-3 p-3 bg-light shadow d-flex justify-content-around align-items-center rounded text-center">
+                    <div class="d-block mb-2">
+                        <i class="fa-solid fa-database"></i>
+                        <span>Ultimos productos ...</span>
+                        <ul class="list-group list-group-flush">
+                            {% for producto in ultimos_productos %}
+                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                            <hr>
+                            {% endfor %}
+
+                          </ul>
+                    </div>
+                    <div class="d-block mb-2">
+                        <i class="fa-solid fa-hourglass-end"></i>
+                        Proximos Vencimientos
+                        <ul class="list-group list-group-flush">
+                            {% for producto in productos_a_vencer %}
+                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                            <hr>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                    <canvas id="chart"></canvas>
                 </div>
             </div>
         </div>
-        <div>
-            <span class="d-block mb-2">
-                <i class="fa-solid fa-hourglass-end"></i>
-                Proximos Vencimientos
-            </span>
-            <div class="container">
-                <div class="row justify-content-center">
-                    {% for producto in productos_a_vencer %}
-                    <div class="col m-2" style="width: 150px; height: 150px; max-width:150px;">
-                        <div class="card bg-light shadow border-light text-center">
-                            <div class="card-body p-1">
-                                <div><img class="img-fluid" style="width: 50px; height: 40px" src="{{producto.imagen.url}}"></div>
-                                <h6 class="card-title">
-                                    <span>Producto:<br></span>
-                                    <a class="text-decoration-none" href="{% url 'productos_filt' producto.producto %}">{{producto.producto | truncatewords:"1"}}</a>
-                                </h6>
-                                <h6 class="card-title">
-                                    <span>Vencimiento:<br></span>
-                                    {{producto.fechaVnto | date:"SHORT_DATE_FORMAT"}}
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- if last column in row -->
-                    {% if forloop.counter is 3 %} {% if not forloop.last%}
-                </div>
-                <div class="row justify-content-center">
-                    {% endif %} {% endif %} {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
 {% endblock %}

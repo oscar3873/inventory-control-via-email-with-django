@@ -15,6 +15,7 @@ urlpatterns = [
     path('signin/',views.signin, name='signin'),
     path('logout/',views.signout, name='logout'),
     path('configurar/',views.configurar, name='configurar'),
+    path("calendario/", views.CalendarViewNew.as_view(), name="calendar"),
     # path('productos/proximos_a_vencer_', views.ProductosListView.productos_list, name='proximos_a_vencer'),
     # path('producto/<pk>', views.ProductoDetailView.as_view(), name='producto'),
     # path('producto/new/', views.ProductosListView.producto_new, name='producto_new'),
