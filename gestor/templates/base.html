@@ -8,11 +8,16 @@
     {% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <!-- fontawesome -->
     <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-
+    <!-- fullcanlendar.io -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.11.3/main.css,npm/fullcalendar@5.11.3/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css" integrity="sha256-jLWPhwkAHq1rpueZOKALBno3eKP3m4IMB131kGhAlRQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" integrity="sha256-5veQuRbWaECuYxwap/IOE/DAwNxgm4ikX7nrgsqYp88=" crossorigin="anonymous">
+    <!-- bootstrop cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
     <!-- Add additional CSS in static file -->
     <link type="text/css" rel="stylesheet" href="{% static 'style.css' %}">
 </head>
@@ -51,10 +56,10 @@
                         </a>
                     </li>
                     <li class="m-2 ">
-                        <a href="{% url 'vencimientos' %}" class="nav-link text-white">
+                        <a href="{% url 'calendario' %}" class="nav-link text-white">
                             <div>
                                 <i class="fas fa-paperclip me-2"></i>
-                                <span>Reports</span>
+                                <span>Calendario Vencimienetos</span>
                             </div>
 
                         </a>
@@ -77,7 +82,7 @@
         <!-- Page Content -->
 
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-primary text-white py-2 px-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-info text-white py-2 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-bars me-4" id="menu-toggle" onclick="togleed()"></i>
                     <h4 class="title">Sistema de Control de Stock</h4>
@@ -98,7 +103,7 @@
                             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user me-2"></i>John Doe
                             </a>
-                            <ul class="dropdown-menu text-center bg-primary" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu text-center bg-info" aria-labelledby="navbarDropdown">
                                 <li><a href="{% url 'configurar' %}" class=" btn text-white" href="#">Configurar</a></li>
                                 <li><a href="{% url 'logout' %}" class="btn btn-sm btn-danger text-white" href="#">Cerrar Sesion</a></li>
                             </ul>
@@ -120,9 +125,16 @@
         </div>
         {% endblock %}
     </main>
-
+    <!-- bootstrap cdn scrips -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- char.js cdn scrips -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- fullcalendar.io cdn scrips -->
+    <script src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.11.3,npm/fullcalendar@5.11.3/locales-all.js,npm/fullcalendar@5.11.3/locales-all.min.js,npm/fullcalendar@5.11.3/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js" integrity="sha256-7PzqE1MyWa/IV5vZumk1CVO6OQbaJE4ns7vmxuUP/7g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.js" integrity="sha256-q/pWZa7BPw+dw/+dP8No1INwnF9NHfB9svS53hgAC8E=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js" integrity="sha256-lomiTyENeSGOpm5TiwjdxUn87bSv1TL581KZ7bhEEh0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js" integrity="sha256-h/8r72lsgOmbQuoZKT6x3MwmqPIBN9rgiD23Bzgd2n4=" crossorigin="anonymous"></script>
 
     <script>
         var el = document.getElementById("wrapper");
@@ -131,6 +143,9 @@
             el.classList.toggle("toggled");
         };
     </script>
+
+    <!-- SCRIPTS PARA HACER FUNCIONAR CHAR.JS--->
+    <!-- GRAFICO DE BARRA  -->
     <script>
         const ctx = document.getElementById('barras');
 
@@ -159,6 +174,7 @@
             }
         });
     </script>
+    <!-- GRAFICO DE DONA -->
     <script>
         var ctx2 = document.getElementById("chart");
 
@@ -185,6 +201,42 @@
         var pieChart = new Chart(ctx2, {
             type: 'pie',
             data: oilData
+        });
+    </script>
+    <!-- SCRIPT PARA CALENDARIO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                googleCalendarApiKey: 'AIzaSyCza6uWfDVjNTrAX-Z9MIW5x_tUbt21a_s',
+                events: {
+                    googleCalendarId: 'cb3a126e4645f8d1de693dc10177e7d3a3d684e0edfd5e4622ba7e722c0b53f2@group.calendar.google.com',
+                    className: 'gcal-event'
+                },
+                themeSystem: 'bootstrap5',
+                initialView: 'dayGridMonth',
+                selectable: true,
+                headerToolbar: {
+                    left: 'dayGridMonth,today',
+                    center: 'title',
+                    right: 'prevYear,prev,next,nextYear'
+                },
+                buttonText: {
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Dia',
+                    list: 'Lista'
+                },
+                locale: 'es',
+            });
+            calendar.updateSize()
+            calendar.addEvent({
+                title: 'Vencimiento Gaseosa',
+                start: '2022-12-12',
+                end: '2022-12-13'
+            })
+            calendar.render();
         });
     </script>
 </body>
