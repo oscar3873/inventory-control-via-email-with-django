@@ -1,6 +1,6 @@
 {% if paginator.num_pages > 1%}
 <div class="d-flex justify-content-center">
-    <ul class="pagination bg-dark">
+    <ul class="pagination shadow-lg p-0">
         {% if productos.has_previous %}
             <li class="page-item d-none d-sm-block bg-dark"><a class="page-link" href="?page={{ productos.previous_page_number }}#pagtable">Anterior</a></li>
         {% endif %}

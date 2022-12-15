@@ -6,17 +6,21 @@
 <div class="container p-4">
     <div class="row justify-content-center">
         {% for producto in productos %}
-        <div class="col-3 m-2">
-            <div class="card bg-dark pointer shadow border-0 border-light rounded text-center text-white">
-                <div class="card-body p-1">
-                    {% if producto.imagen %}
-                        <img style="width: 100%; height: 210px; padding: 10px;" src="{{producto.imagen.url}}">
+        <div class="col-3 m-2 p-0 text-center bg-light shadow">
+            <div class="card border-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fa-solid fa-box fa-lg "></i>
+                        <div class="card-title">
+                            <p class="m-0">Producto: {{producto.producto | truncatewords:"1"}}</p>
+                            <p class="m-0">Marca: {{producto.marca | truncatewords:"1"}}</p>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        {% if producto.imagen %}
+                    <img style="width: 100%; height: 210px; padding: 10px;" src="{{producto.imagen.url}}">
                     {% else %}
-                        <img style="width: 190px; height:210px ; padding: 10px;" src="https://cdn.icon-icons.com/icons2/1462/PNG/512/120nophoto_100007.png">
+                    <img style="width: 190px; height:210px ; padding: 10px;" src="https://cdn.icon-icons.com/icons2/1462/PNG/512/120nophoto_100007.png">
                     {% endif %}
-                    <i class="fa-solid fa-box fa-lg "></i>
-                    <h6 class="card-title">Producto: {{producto.producto | truncatewords:"1"}}</h6>
-                    <h6 class="card-title">Marca: {{producto.marca | truncatewords:"1"}}</h6>
                     <p class="card-text">Stock de Ingreso: {{producto.stockIng}}</p>
                     <p class="card-text">Stock disponible: {{producto.stockDisp}}</p>
                     <p class="card-text">Envasado: {{producto.fechaIngreso | date:"d/m/Y"}}</p>
@@ -24,7 +28,7 @@
                     <p class="card-text">Codigo de bulto: {{producto.codBulto }}</p>
                     {% if user.is_authenticated %}
                         <div class="d-flex justify-content-center">
-                            <a href="{% url 'producto_update' producto.id%}" class="btn btn-dark m-1">
+                            <a href="{% url 'producto_update' producto.id%}" class="btn btn-success m-1">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
                             <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
@@ -33,8 +37,7 @@
                                 {% include 'prod_modal.html' %}
                         </div>
                     {% endif %}
-                    
-                </div>
+                    </div>
             </div>
         </div>
         <!-- if last column in row -->
