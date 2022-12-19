@@ -1,15 +1,15 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal{{producto.id}}" tabindex="-1" role="dialog" arialabelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark">
+        <div class="modal-content bg-light shadow">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h4 class="modal-title text-danger" id="exampleModalLabel">Alerta!</h4>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span>&times;</span>
-                </button>
+                </button> -->
             </div>
-        <div class="modal-body bg-dark">
-            ¿Seguro que desea eliminar este producto?
+        <div class="modal-body bg-white">
+            <strong>¿Seguro que desea eliminar este producto?</strong>
             <div>
                 Producto: {{ producto.producto }}
             <br> 
