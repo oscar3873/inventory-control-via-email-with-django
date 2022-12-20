@@ -14,7 +14,7 @@ class Producto(models.Model):
     stockIng= models.PositiveIntegerField('Stock de ingreso',blank=False,help_text="Cantidad por bultos/fardos/cajas")
     stockDisp= models.PositiveIntegerField('Stock disponible',blank=False) # Para los caso de obtener-consumir la materia prima
     codBulto = models.CharField('Codigo de Bulto',max_length=13,help_text="Codigo que figura en el bulto ",blank=False) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO
-   
+    vencido = models.BooleanField(default=False)
     imagen = models.ImageField(upload_to='',null=True) # borrar el img/
 
 
@@ -29,10 +29,10 @@ class Producto(models.Model):
 
 
 class Evento(models.Model):
-    summary = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
-    start = models.DateField(blank=False)
-    end = models.DateField(blank=False)
+    summary = models.CharField(max_length=50,null=False)
+    description = models.TextField(blank=True,null=False)
+    start = models.DateField(blank=False,null=False)
+    end = models.DateField(blank=False,null=False)
 
 
 

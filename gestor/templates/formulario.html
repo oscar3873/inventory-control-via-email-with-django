@@ -1,0 +1,34 @@
+<!-- Modal -->
+{% load crispy_forms_tags %}
+<div class="modal fade" id="Modal{{nuevo}}" tabindex="-1" role="dialog" arialabelledby="ModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-light shadow">
+            
+        <div class="modal-body bg-white">
+
+    
+    <div class="d-flex flex-column p-4">
+        <div class="d-flex flex-column justify-content align-items-center">
+            <div class="card border-1 text-center">
+                <div class="card-title text-center bg-light">
+                    <span>
+                        <!-- BOTON DE NUEVO PRODUCTO -->
+                        <h5><i class="fa-solid fa-square-plus"></i>  Nuevo Producto</h5>
+                    </span>
+                </div>
+                <div class="card-body p-1 m-auto d-md-flex shadow border-0  border-light rounded">
+                    <div class="mx-5">
+                        <form method="POST" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <table>{{ formulario|crispy}}</table>
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div></div>

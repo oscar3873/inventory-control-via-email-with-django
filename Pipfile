@@ -9,6 +9,9 @@ fontawesomefree = "*"
 django-crispy-forms = "*"
 pillow = "*"
 django-bootstrap-v5 = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
 
 [dev-packages]
 

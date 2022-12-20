@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% block content %}
 <div class="d-flex flex-column p-4">
-    {% if user.is_authenticated %}
     <div class="d-flex p-4 justify-content align-items-center shadow-lg bg-light">
         <div class="card border-0 bg-light">
             <div class="card-title">
@@ -10,20 +10,28 @@
                     </span>
             </div>
             <div class="card-body p-0 m-auto">
-                <a class="btn btn-block bg-primary shadow text-white w-100" href="producto/new">
-                    <i class="fa-solid fa-circle-plus fa-lg"></i>
+                <!-- <a class="btn btn-block bg-primary shadow text-white w-100" href="producto/new"> -->
+
+                    <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#Modal{{nuevo}}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                        {% include 'formulario.html' %}
                 </a>
             </div>
         </div>
     </div>
-    {% endif %}
+    
+   
 
+    <!-- DATOS HISTORICOS -->
+    
     <div class="row g-3 my-4">
+        <h4 class=""> HISTORICOS </h4>
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h5 class="">720</h5>
-                    <p class="">Productos</p>
+                    <h5 class="">{{prod_all}}</h5>
+                    <p class="">Productos Ingresados</p>
                 </div>
                 <i class="fa-solid fa-box fs-1 text-primary p-3"></i>
             </div>
@@ -32,28 +40,55 @@
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h5 class="">49</h5>
+                    <h5 class="">{{prod_ven_all}}</h5>
                     <p class="">Vencidos</p>
                 </div>
                 <i class="fas fa-hourglass-end fs-1 text-primary p-3"></i>
             </div>
-        </div>
+        </div>   
+        
 
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h5 class="">3899</h5>
-                    <p class="">Entregados</p>
+                    <h5 class=""> {{porc_ven}}% </h5>
+                    <p class="">% Vencidos</p>
                 </div>
-                <i class="fas fa-truck fs-1 text-primary p-3"></i>
+                <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATOS ACTUALES(AÑO) -->
+
+    <div class="row g-3 my-4">
+        <h4 class=""> CORRIENTE AÑO </h4>
+        <div class="col-md-3">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h5 class="">{{productos_all_anual}}</h5>
+                    <p class="">Productos Ingresados</p>
+                </div>
+                <i class="fa-solid fa-box fs-1 text-primary p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h5 class="">%25</h5>
-                    <p class="">Ingresos</p>
+                    <h5 class="">{{productos_ven}}</h5>
+                    <p class="">Vencidos</p>
+                </div>
+                <i class="fas fa-hourglass-end fs-1 text-primary p-3"></i>
+            </div>
+        </div>   
+       
+
+        <div class="col-md-3">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h5 class=""> {{porcentaje_ven_actual}}% </h5>
+                    <p class="">Vencidos</p>
                 </div>
                 <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
             </div>
@@ -62,9 +97,12 @@
 
         <div class="row g-3 my-4">
             <div class="col-6">
+                <div style="text-align: center;"><h4>TOTAL DE PRODUCTOS INGRESADOS MENSUAL</h4></div>   <!--############## ACOMODAR ##############-->
+                
                 <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                     <canvas id="barras"></canvas>
                 </div>
+                <div style="text-align: center; margin-top: 4%;"><h4>MOVIMIENTOS Y VENCIMIENTOS</h4></div>   <!--############## ACOMODAR ##############-->
                 <div class="my-3 p-3 bg-light shadow d-flex justify-content-around align-items-center rounded text-center">
                     <div class="d-block mb-2">
                         <i class="fa-solid fa-database"></i>
@@ -96,5 +134,76 @@
             </div>
         </div>
 </div>
+
+<!-- bootstrap cdn scrips -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- char.js cdn scrips -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var el = document.getElementById("wrapper");
+
+    function togleed() {
+        el.classList.toggle("toggled");
+    };
+</script>
+
+<!-- SCRIPTS PARA HACER FUNCIONAR CHAR.JS--->
+<!-- GRAFICO DE BARRA  -->
+<script>
+
+    var variable = JSON.parse("{{listado|escapejs}}");
+    var variable_ven = JSON.parse("{{listado_ven|escapejs}}");
+    console.log(variable);
+    const ctx = document.getElementById('barras');
+
+    
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            datasets: [{
+                label: 'Total Ingresos',
+                data: variable,
+                borderWidth: 1,
+                backgroundColor: '#0D6EFD',
+            }, {
+                label: 'Total Vencidos',
+                data: variable_ven,
+                borderWidth: 1,
+                backgroundColor: '#DC3545',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<!-- GRAFICO DE DONA -->
+<script>
+
+    var prod = JSON.parse("{{lista|escapejs}}");
+    var stock = JSON.parse("{{lista_stock|escapejs}}");
+
+    var ctx2 = document.getElementById("chart");
+
+    var oilData = {
+        labels: prod,
+        datasets: [{
+            data: stock,
+        }]
+    };
+
+    var pieChart = new Chart(ctx2, {
+        type: 'pie',
+        data: oilData
+    });
+</script>
+
 
 {% endblock %}

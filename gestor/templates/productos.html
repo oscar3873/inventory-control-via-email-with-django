@@ -1,5 +1,22 @@
 {% extends "base.html" %} {% block content %}
-
+<div class="d-flex flex-column p-4">
+{% if user.is_authenticated %}
+    <div class="d-flex p-4 justify-content align-items-center shadow-lg bg-light">
+        <div class="card border-0 bg-light">
+            <div class="card-title">
+                <span>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        Agregar Producto
+                    </span>
+            </div>
+            <div class="card-body p-0 m-auto">
+                <a class="btn btn-block bg-primary shadow text-white w-100" href="#">
+                    <i class="fa-solid fa-circle-plus fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% include 'buscar.html'%}
 
 {% if productos %}
@@ -51,7 +68,7 @@
     <div>
         {%include 'paginator.html' %}
     </div>
-    
+</div>
 </div>
 {% endif %}
 

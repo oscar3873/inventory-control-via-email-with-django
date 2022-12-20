@@ -142,68 +142,7 @@
         function togleed() {
             el.classList.toggle("toggled");
         };
-    </script>
-
-    <!-- SCRIPTS PARA HACER FUNCIONAR CHAR.JS--->
-    <!-- GRAFICO DE BARRA  -->
-    <script>
-        const ctx = document.getElementById('barras');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                datasets: [{
-                    label: 'Cantidad de productos',
-                    data: [10, 5, 4, 2, 9, 10, 3, 5, 6, 7, 9, 4],
-                    borderWidth: 1,
-                    backgroundColor: '#0D6EFD',
-                }, {
-                    label: 'Productos Vencidos',
-                    data: [2, 3, 4, 2, 3, 0, 1],
-                    borderWidth: 1,
-                    backgroundColor: '#DC3545',
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-    <!-- GRAFICO DE DONA -->
-    <script>
-        var ctx2 = document.getElementById("chart");
-
-        var oilData = {
-            labels: [
-                "Gasesoa",
-                "Harina",
-                "Sal",
-                "Azucar",
-                "Manteca"
-            ],
-            datasets: [{
-                data: [2, 3, 3, 5, 4],
-                backgroundColor: [
-                    "#FF6384",
-                    "#63FF84",
-                    "#84FF63",
-                    "#8463FF",
-                    "#6384FF"
-                ]
-            }]
-        };
-
-        var pieChart = new Chart(ctx2, {
-            type: 'pie',
-            data: oilData
-        });
-    </script>
-    
+    </script>    
     
 </body>
 

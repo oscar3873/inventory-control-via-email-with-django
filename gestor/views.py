@@ -1,3 +1,5 @@
+import datetime
+import json
 import os
 
 from django.db import IntegrityError
@@ -73,12 +75,101 @@ def signin(request):
 # DASHBOARD
 
 def index(request):
-    ultimos_productos = list(Producto.objects.all())[-3:]
-    productos_a_vencer = list(
-        Producto.objects.all().order_by('fechaVnto'))[0:3]
+    ultimos_productos = list(Producto.objects.all()) [-3:]
+    productos_a_vencer = list(Producto.objects.all().order_by('fechaVnto')) [-3:]
+
+    date = datetime.date.today()
+    productos_vencidos = 0
+    for prod_ven in Producto.objects.all():
+        if prod_ven.fechaVnto <= date:
+            productos_vencidos = productos_vencidos+1
+    
+    prod_mes = Producto.objects.all().order_by('fechaIngreso__year','fechaIngreso__month')
+    prod_ord_mes =[[], [], [], [], [], [], [], [], [], [], [], []]
+    for p_m in prod_mes:
+        if p_m.fechaIngreso.year == date.year:  # PRODUCTOS ORDENADOS POR MES DE INGRESO (ASCENDENTE) EN EL AÑO ACTUAL
+            prod_ord_mes[p_m.fechaIngreso.month - 1].append(p_m)
+    
+    prod_mes1 = Producto.objects.all().order_by('fechaIngreso__year','fechaIngreso__month')
+    prod_ord_mes1 =[[], [], [], [], [], [], [], [], [], [], [], []]
+    for p_m1 in prod_mes1:
+        if p_m1.fechaVnto.year == date.year and p_m1.fechaVnto.month <= date.month and p_m1.fechaVnto.day < date.day:  # PRODUCTOS ORDENADOS POR MES DE INGRESO (ASCENDENTE) EN EL AÑO ACTUAL
+            prod_ord_mes1[p_m1.fechaVnto.month - 1].append(p_m1)
+
+    productos_all = []
+    for p_all in prod_mes:
+        if p_all.fechaIngreso.year == date.year:
+            productos_all.append(p_all)
+
+    prod_ord_mes_ven = []
+    prod_vencidos_all = []
+    for p_m_v in prod_mes:
+        if p_m_v.fechaVnto <= date:
+            prod_vencidos_all.append(p_m_v)     # TODOS LOS PRODUCTOS VENCIDOS HOSTORICOS
+
+        if p_m_v.fechaVnto.year == date.year:  
+            prod_ord_mes_ven.append(p_m_v)
+
+    prod_ven_año = []
+    for p_v in prod_ord_mes_ven:
+        if p_v.fechaVnto <= date:
+            prod_ven_año.append(p_v) # TODOS LOS PRODUCTOS VENCIDOS ANUAL
+
+
+    producots_vencidos = Producto.objects.filter(vencido = True)
+
+    if Producto.objects.all().count():
+        porcentaje_ven = round((100*(len(prod_vencidos_all) / Producto.objects.all().count() )),2)
+        porcentaje_ven_actual = round((100*(len(prod_ven_año) / len(productos_all))),2)
+    else :
+        porcentaje_ven = 0
+        porcentaje_ven_actual = 0
+
+
+    cont = 0
+    listado = []
+    for ind in prod_ord_mes:
+        if ind:
+            listado.append(len(ind))
+        else : 
+            listado.append(0)
+        cont = cont+1
+
+
+    cont_ven = 0
+    listado_ven = []
+    for ind1 in prod_ord_mes1:
+        if ind1:
+            listado_ven.append(len(ind1))
+        else : 
+            listado_ven.append(0)
+        cont_ven = cont_ven+1
+
+    lista=[]
+    lista_stock=[]
+    for dex in Producto.objects.all().filter(fechaIngreso__year= date.year):
+        lista.append(dex.producto+" (%s)" %dex.marca)
+        lista_stock.append(dex.stockIng)
+    formulario = ProductoForm()
     context = {
+        'formulario':formulario,
         'ultimos_productos': ultimos_productos,
-        'productos_a_vencer': productos_a_vencer,
+        'productos_a_vencer': productos_a_vencer,  
+
+        'porc_ven' : porcentaje_ven,
+        'prod_ven_all' : len(prod_vencidos_all),
+        'prod_all' : Producto.objects.all().count(),
+        'prod_ven' : len(producots_vencidos),
+
+        'porcentaje_ven_actual' : porcentaje_ven_actual,
+        'productos_all_anual': len(productos_all),  # CANTIDAD DE LOS PRODUCTOS INGRESADOS durante el correinte año
+        'productos_ven': productos_vencidos,        # CANTIDAD DE LOS PRODUCTOS VENCIDOS EN EL AÑO
+        
+        #JS
+        'listado': json.dumps(listado),             # PRODUCTOS ORDENADOS POR MES DE INGRESO (CANTIDAD POR MES)
+        'listado_ven': json.dumps(listado_ven),     # PRODUCTOS ORDENADOS POR MES DE vencidos (CANTIDAD POR MES)
+        'lista' : json.dumps(lista),
+        'lista_stock' : json.dumps(lista_stock),
     }
     return render(request, 'index.html', context)
 
