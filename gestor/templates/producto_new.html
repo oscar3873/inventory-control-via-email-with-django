@@ -15,6 +15,7 @@
                         <form method="POST" enctype="multipart/form-data" novalidate>
                             {% csrf_token %}
                             <table>{{ formulario|crispy}}</table>
+                            
                             <button type="submit" class="btn btn-success">Guardar</button>
                         </form>
                         <br>

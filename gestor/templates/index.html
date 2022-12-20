@@ -1,6 +1,6 @@
-{% extends "base.html" %} 
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="d-flex flex-column p-4">
+    {% if user.is_authenticated %}
     <div class="d-flex p-4 justify-content align-items-center shadow-lg bg-light">
         <div class="card border-0 bg-light">
             <div class="card-title">
@@ -10,18 +10,13 @@
                     </span>
             </div>
             <div class="card-body p-0 m-auto">
-                <!-- <a class="btn btn-block bg-primary shadow text-white w-100" href="producto/new"> -->
-
-                    <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#Modal{{nuevo}}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                        {% include 'formulario.html' %}
+                <a class="btn btn-block bg-primary shadow text-white w-100" href="producto/new">
+                    <i class="fa-solid fa-circle-plus fa-lg"></i>
                 </a>
             </div>
         </div>
     </div>
-    
-   
+    {% endif %}
 
     <!-- DATOS HISTORICOS -->
     
@@ -134,19 +129,15 @@
             </div>
         </div>
 </div>
-
-<!-- bootstrap cdn scrips -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- bootstrap cdn scrips
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script> -->
 <!-- char.js cdn scrips -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- scripts alerts-bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
 
-<script>
-    var el = document.getElementById("wrapper");
-
-    function togleed() {
-        el.classList.toggle("toggled");
-    };
-</script>
 
 <!-- SCRIPTS PARA HACER FUNCIONAR CHAR.JS--->
 <!-- GRAFICO DE BARRA  -->
@@ -157,7 +148,12 @@
     console.log(variable);
     const ctx = document.getElementById('barras');
 
-    
+    $(document).ready(function() {
+        $("#success-alert").hide();
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#success-alert").slideUp(500);
+        });
+    });    
 
     new Chart(ctx, {
         type: 'bar',
@@ -204,6 +200,4 @@
         data: oilData
     });
 </script>
-
-
 {% endblock %}

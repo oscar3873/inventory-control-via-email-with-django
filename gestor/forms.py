@@ -58,7 +58,7 @@ class ProductoForm(forms.ModelForm):
             if fechaIngreso<fechaEnvasado:
                 self._errors['fechaEnvasado'] = self.error_class(['La fecha de envasado debe ser anterior a la del ingreso.'])
 
-        if fechaVnto<=datetime.date.today():
+        if fechaVnto != None and fechaVnto <= datetime.date.today():
             self._errors['fechaVnto'] = self.error_class(['No es posible cargar producto vencido.'])
     
         if type(stockIng) == type(None):
@@ -77,6 +77,7 @@ class ProductoForm(forms.ModelForm):
 
         if type(codigoBulto) == type(None):
             self._errors['codigoBulto'] = self.error_class(['Campo obligatorio.'])
+            
         elif codigoBulto == '':
             self._errors['codigoBulto'] = self.error_class(['El numero ingresado debe ser mayor a cero.'])
         

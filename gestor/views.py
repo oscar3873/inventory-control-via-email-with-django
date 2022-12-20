@@ -150,9 +150,7 @@ def index(request):
     for dex in Producto.objects.all().filter(fechaIngreso__year= date.year):
         lista.append(dex.producto+" (%s)" %dex.marca)
         lista_stock.append(dex.stockIng)
-    formulario = ProductoForm()
     context = {
-        'formulario':formulario,
         'ultimos_productos': ultimos_productos,
         'productos_a_vencer': productos_a_vencer,  
 
@@ -287,6 +285,7 @@ def producto_new(request):
                             producto.imagen = "unknow.png"
                     
             producto.save()
+            
             text = "Vencimiento de {producto} Marca {marca} Codigo {codigo} es el {fecha} 8:00 pm -10:30 pm".format(
                 producto = producto.producto,
                 marca = producto.marca,
