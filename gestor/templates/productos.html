@@ -48,7 +48,7 @@
                             <a href="{% url 'producto_update' producto.id%}" class="btn btn-success m-1">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <button href="#" class="btn btn-danger m-1" data-toggle="modal" data-target="#exampleModal{{producto.id}}">
+                            <button href="#" class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#exampleModal{{producto.id}}">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                                 {% include 'prod_modal.html' %}

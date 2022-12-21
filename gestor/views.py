@@ -93,7 +93,7 @@ def index(request):
     prod_mes1 = Producto.objects.all().order_by('fechaIngreso__year','fechaIngreso__month')
     prod_ord_mes1 =[[], [], [], [], [], [], [], [], [], [], [], []]
     for p_m1 in prod_mes1:
-        if p_m1.fechaVnto.year == date.year and p_m1.fechaVnto.month <= date.month and p_m1.fechaVnto.day < date.day:  # PRODUCTOS ORDENADOS POR MES DE INGRESO (ASCENDENTE) EN EL AÑO ACTUAL
+        if p_m1.fechaVnto.year == date.year and p_m1.fechaVnto.month <= date.month and p_m1.fechaVnto.day <= date.day:  # PRODUCTOS ORDENADOS POR MES DE INGRESO (ASCENDENTE) EN EL AÑO ACTUAL
             prod_ord_mes1[p_m1.fechaVnto.month - 1].append(p_m1)
 
     productos_all = []
