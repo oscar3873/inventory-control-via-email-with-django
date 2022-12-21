@@ -47,12 +47,25 @@
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class=""> {{porc_ven}}% </h5>
-                    <p class="">% Vencidos</p>
+                    <p class="">Vencidos</p>
                 </div>
                 <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
             </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h5 class=""> {{entregados}} </h5>
+                    <p class="">Entregados</p>
+                </div>
+                <i class="fas fa-solid fa-truck fs-1 text-primary p-3"></i>
+            </div>
+        </div>
+
     </div>
+
+    
 
     <!-- DATOS ACTUALES(AÑO) -->
 
@@ -88,6 +101,17 @@
                 <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
             </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h5 class=""> {{entregados}} </h5>
+                    <p class="">Entregados</p>
+                </div>
+                <i class="fas fa-solid fa-truck fs-1 text-primary p-3"></i>
+            </div>
+        </div>
+
     </div>
 
         <div class="row g-3 my-4">
@@ -104,7 +128,7 @@
                         <span>Ultimos productos ...</span>
                         <ul class="list-group list-group-flush">
                             {% for producto in ultimos_productos %}
-                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca producto.pk %}">{{producto.marca | truncatewords:"2"}}</a>
                             <hr>
                             {% endfor %}
 
@@ -115,7 +139,7 @@
                         Proximos Vencimientos
                         <ul class="list-group list-group-flush">
                             {% for producto in productos_a_vencer %}
-                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca producto.pk %}">{{producto.marca | truncatewords:"2"}}</a>
                             <hr>
                             {% endfor %}
                         </ul>

@@ -1,15 +1,15 @@
-<!-- Modal -->
-<div class="modal fade" id="exampleModal{{producto.id}}" tabindex="-1" role="dialog" arialabelledby="exampleModalLabel">
+ <!-- Modal -->
+<div class="modal fade" id="Modal{{producto.id}}" tabindex="-1" role="dialog" arialabelledby="ModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content bg-light shadow">
             <div class="modal-header">
-                <h4 class="modal-title text-danger" id="exampleModalLabel">Alerta!</h4>
+                <h4 class="modal-title" id="ModalLabel">Entregar</h4>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span>&times;</span>
                 </button> -->
             </div>
         <div class="modal-body bg-white">
-            <strong>¿Seguro que desea eliminar este producto?</strong>
+            <strong>¿Desea marcar como entregado?</strong>
             <div>
                 Producto: {{ producto.producto }}
             <br> 
@@ -21,7 +21,7 @@
         </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a class="btn btn-danger" href="{% url 'producto_delete' producto.id %}">Eliminar</a>
+                <a class="btn btn-success" href="{% url 'producto_entregado' producto.id %}">Entregar</a>
             </div>
         </div>
     </div>

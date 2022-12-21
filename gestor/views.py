@@ -76,7 +76,8 @@ def signin(request):
 
 def index(request):
     ultimos_productos = list(Producto.objects.all()) [-3:]
-    productos_a_vencer = list(Producto.objects.all().order_by('fechaVnto')) [-3:]
+    ultimos_productos.reverse()
+    productos_a_vencer = list(Producto.objects.all().order_by('fechaVnto')) [0:3]
 
     date = datetime.date.today()
     productos_vencidos = 0
@@ -114,6 +115,8 @@ def index(request):
     for p_v in prod_ord_mes_ven:
         if p_v.fechaVnto <= date:
             prod_ven_año.append(p_v) # TODOS LOS PRODUCTOS VENCIDOS ANUAL
+            p_v.vencido = True
+            p_v.save()
 
 
     producots_vencidos = Producto.objects.filter(vencido = True)
@@ -147,13 +150,21 @@ def index(request):
 
     lista=[]
     lista_stock=[]
-    for dex in Producto.objects.all().filter(fechaIngreso__year= date.year):
-        lista.append(dex.producto+" (%s)" %dex.marca)
+    for dex in Producto.objects.all().filter(fechaIngreso__year= date.year , vencido = False):
+        lista.append("{producto_d} {tipo_d} ({marca_d})".format(
+            producto_d = dex.producto,
+            tipo_d = dex.tipo,
+            marca_d = dex.marca,
+        ))
         lista_stock.append(dex.stockIng)
+
+    entregado =len(Producto.objects.all().filter(entregado=True))
+    
     context = {
         'ultimos_productos': ultimos_productos,
         'productos_a_vencer': productos_a_vencer,  
 
+        'entregados' : entregado,
         'porc_ven' : porcentaje_ven,
         'prod_ven_all' : len(prod_vencidos_all),
         'prod_all' : Producto.objects.all().count(),
@@ -163,9 +174,10 @@ def index(request):
         'productos_all_anual': len(productos_all),  # CANTIDAD DE LOS PRODUCTOS INGRESADOS durante el correinte año
         'productos_ven': productos_vencidos,        # CANTIDAD DE LOS PRODUCTOS VENCIDOS EN EL AÑO
         
-        #JS
+        #JS - BARRA
         'listado': json.dumps(listado),             # PRODUCTOS ORDENADOS POR MES DE INGRESO (CANTIDAD POR MES)
         'listado_ven': json.dumps(listado_ven),     # PRODUCTOS ORDENADOS POR MES DE vencidos (CANTIDAD POR MES)
+        #JS - TORTA
         'lista' : json.dumps(lista),
         'lista_stock' : json.dumps(lista_stock),
     }
@@ -174,6 +186,14 @@ def index(request):
 
 #LISTA DE PRODUCTOS
 class ProductoListView(generic.ListView):
+
+    def producto_entregado(request,pk):
+        prod = Producto.objects.get(pk=pk)
+        print(prod.entregado)
+        prod.entregado=True
+        prod.save()
+        print(prod.entregado)
+        return redirect('productos')
 
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
@@ -350,36 +370,23 @@ def producto_update(request, pk):
 
 
 #FUNCION DE BUSQUEDA
-def Buscar(request,busqueda=None):
+def Buscar(request,busqueda=None,pk=None):
         productos = Producto.objects.all()
         if busqueda!=None:
-            r = request.GET.get("myInput")
+            productos = productos.filter(pk=pk)
 
-            productos = Producto.objects.filter(
-                Q(marca__icontains = busqueda) |
-                Q(producto__icontains = busqueda) |
-                Q(codBulto__icontains = busqueda)
-            )
-
-            if r != None:
-                productos = productos.filter(
-                    Q(marca__icontains = r) |
-                    Q(producto__icontains = r) |
-                    Q(codBulto__icontains = r)
-                )
             context = {
-                'productos':productos ,
-                'buscado':str.upper(busqueda),
+                'productos': productos,
                 }
             
-
-        busqueda = request.GET.get("myInput")
-        if busqueda :
-            productos = Producto.objects.filter(
-                Q(marca__icontains = busqueda) |
-                Q(producto__icontains = busqueda) |
-                Q(codBulto__icontains = busqueda)
-            )
+        else:
+            busqueda = request.GET.get("myInput")
+            if busqueda :
+                productos = Producto.objects.filter(
+                    Q(marca__icontains = busqueda) |
+                    Q(producto__icontains = busqueda) |
+                    Q(codBulto__icontains = busqueda)
+                )
         return render(request, 'productos.html', {'productos' : productos})
 
 

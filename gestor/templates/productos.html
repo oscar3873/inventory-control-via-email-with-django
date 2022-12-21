@@ -28,8 +28,9 @@
                     <div class="card-header bg-primary text-white">
                         <i class="fa-solid fa-box fa-lg "></i>
                         <div class="card-title">
-                            <p class="m-0">Producto: {{producto.producto | truncatewords:"1"}}</p>
-                            <p class="m-0">Marca: {{producto.marca | truncatewords:"1"}}</p>
+                            <p class="m-0">Marca: <strong>{{producto.marca | truncatewords:"1"}}</strong></p>
+                            <p class="m-0">Producto: <strong>{{producto.producto | truncatewords:"1"}}</strong></p>
+                            <p class="m-0">Tipo: <strong>{{producto.tipo | truncatewords:"1"}}</strong></p>
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -40,7 +41,8 @@
                     {% endif %}
                     <p class="card-text">Stock de Ingreso: {{producto.stockIng}}</p>
                     <p class="card-text">Stock disponible: {{producto.stockDisp}}</p>
-                    <p class="card-text">Envasado: {{producto.fechaIngreso | date:"d/m/Y"}}</p>
+                    <p class="card-text">Envasado: {{producto.fechaEnvasado | date:"d/m/Y"}}</p>
+                    <p class="card-text">Ingresado: {{producto.fechaIngreso | date:"d/m/Y"}}</p>
                     <p class="card-text">Vencimiento: {{producto.fechaVnto | date:"d/m/Y"}}</p>
                     <p class="card-text">Codigo de bulto: {{producto.codBulto }}</p>
                     {% if user.is_authenticated %}
@@ -52,6 +54,10 @@
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                                 {% include 'prod_modal.html' %}
+                            <button href="#" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#Modal{{producto.id}}">
+                                <i class="fa-solid fa-truck"></i>
+                            </button>
+                                {% include 'entregado_modal.html' %}
                         </div>
                     {% endif %}
                     </div>

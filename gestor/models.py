@@ -15,6 +15,7 @@ class Producto(models.Model):
     stockDisp= models.PositiveIntegerField('Stock disponible',blank=False) # Para los caso de obtener-consumir la materia prima
     codBulto = models.CharField('Codigo de Bulto',max_length=13,help_text="Codigo que figura en el bulto ",blank=False) # LOS FARDOS EN GRAL CONTIENEN UN CODIGO DEL MISMO
     vencido = models.BooleanField(default=False)
+    entregado = models.BooleanField(default=False)
     imagen = models.ImageField(upload_to='',null=True) # borrar el img/
 
 
@@ -25,7 +26,7 @@ class Producto(models.Model):
         return self.pk
 
     class Meta:
-        ordering = ['fechaVnto']
+        ordering = ['fechaIngreso']
 
 
 class Evento(models.Model):
