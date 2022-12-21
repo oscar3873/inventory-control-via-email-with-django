@@ -19,14 +19,14 @@
     {% endif %}
 
     <!-- DATOS HISTORICOS -->
-    
+
     <div class="row g-3 my-4">
         <h4 class=""> HISTORICOS </h4>
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">{{prod_all}}</h5>
-                    <p class="">Productos Ingresados</p>
+                    <p class="fw-lighter">Productos</p>
                 </div>
                 <i class="fa-solid fa-box fs-1 text-primary p-3"></i>
             </div>
@@ -36,18 +36,18 @@
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">{{prod_ven_all}}</h5>
-                    <p class="">Vencidos</p>
+                    <p class="fw-lighter">Productos Vencidos</p>
                 </div>
                 <i class="fas fa-hourglass-end fs-1 text-primary p-3"></i>
             </div>
-        </div>   
-        
+        </div>
+
 
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class=""> {{porc_ven}}% </h5>
-                    <p class="">% Vencidos</p>
+                    <p class="fw-lighter">Porcentaje Vencidos</p>
                 </div>
                 <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
             </div>
@@ -62,7 +62,7 @@
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">{{productos_all_anual}}</h5>
-                    <p class="">Productos Ingresados</p>
+                    <p class="fw-lighter">Productos</p>
                 </div>
                 <i class="fa-solid fa-box fs-1 text-primary p-3"></i>
             </div>
@@ -72,62 +72,66 @@
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class="">{{productos_ven}}</h5>
-                    <p class="">Vencidos</p>
+                    <p class="fw-lighter">Vencidos</p>
                 </div>
                 <i class="fas fa-hourglass-end fs-1 text-primary p-3"></i>
             </div>
-        </div>   
-       
+        </div>
+
 
         <div class="col-md-3">
             <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
                 <div>
                     <h5 class=""> {{porcentaje_ven_actual}}% </h5>
-                    <p class="">Vencidos</p>
+                    <p class="fw-lighter">Vencidos</p>
                 </div>
                 <i class="fas fa-chart-line fs-1 text-primary p-3"></i>
             </div>
         </div>
     </div>
 
-        <div class="row g-3 my-4">
-            <div class="col-6">
-                <div style="text-align: center;"><h4>TOTAL DE PRODUCTOS INGRESADOS MENSUAL</h4></div>   <!--############## ACOMODAR ##############-->
-                
-                <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
-                    <canvas id="barras"></canvas>
-                </div>
-                <div style="text-align: center; margin-top: 4%;"><h4>MOVIMIENTOS Y VENCIMIENTOS</h4></div>   <!--############## ACOMODAR ##############-->
-                <div class="my-3 p-3 bg-light shadow d-flex justify-content-around align-items-center rounded text-center">
-                    <div class="d-block mb-2">
-                        <i class="fa-solid fa-database"></i>
-                        <span>Ultimos productos ...</span>
-                        <ul class="list-group list-group-flush">
-                            {% for producto in ultimos_productos %}
-                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
-                            <hr>
-                            {% endfor %}
-
-                          </ul>
-                    </div>
-                    <div class="d-block mb-2">
-                        <i class="fa-solid fa-hourglass-end"></i>
-                        Proximos Vencimientos
-                        <ul class="list-group list-group-flush">
-                            {% for producto in productos_a_vencer %}
-                            <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
-                            <hr>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+    <div class="row g-3 my-4">
+        <div class="col-6">
+            <div style="text-align: center;">
+                <h4>TOTAL DE PRODUCTOS INGRESADOS MENSUAL</h4>
             </div>
-            <div class="col-6">
-                <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
-                    <canvas id="chart"></canvas>
+            <!--############## ACOMODAR ##############-->
+
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                <canvas id="barras"></canvas>
+            </div>
+            <div style="text-align: center; margin-top: 4%;">
+                <h4>MOVIMIENTOS Y VENCIMIENTOS</h4>
+            </div>
+            <!--############## ACOMODAR ##############-->
+            <div class="my-3 p-3 bg-light shadow d-flex justify-content-around align-items-center rounded text-center">
+                <div class="d-block mb-2">
+                    <i class="fa-solid fa-database"></i>
+                    <span class="fw-lighter">Ultimos productos ...</span>
+                    <ul class="list-group list-group-flush">
+                        {% for producto in ultimos_productos %}
+                        <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                        <hr> {% endfor %}
+
+                    </ul>
+                </div>
+                <div class="d-block mb-2">
+                    <i class="fa-solid fa-hourglass-end"></i>
+                    <span class="fw-lighter">Proximos vencimientos ...</span>
+                    <ul class="list-group list-group-flush">
+                        {% for producto in productos_a_vencer %}
+                        <a class="text-decoration-none" href="{% url 'productos_filt' producto.marca  %}">{{producto.marca | truncatewords:"2"}}</a>
+                        <hr> {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
+        <div class="col-6">
+            <div class="p-3 bg-light shadow d-flex justify-content-around align-items-center rounded">
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- bootstrap cdn scrips
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script> -->
@@ -136,17 +140,16 @@
 <!-- scripts alerts-bootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+
 
 
 <!-- SCRIPTS PARA HACER FUNCIONAR CHAR.JS--->
 <!-- GRAFICO DE BARRA  -->
 <script>
-
     var variable = JSON.parse("{{listado|escapejs}}");
     var variable_ven = JSON.parse("{{listado_ven|escapejs}}");
     console.log(variable);
-    const ctx = document.getElementById('barras'); 
+    const ctx = document.getElementById('barras');
 
     new Chart(ctx, {
         type: 'bar',
@@ -175,7 +178,6 @@
 </script>
 <!-- GRAFICO DE DONA -->
 <script>
-
     var prod = JSON.parse("{{lista|escapejs}}");
     var stock = JSON.parse("{{lista_stock|escapejs}}");
 

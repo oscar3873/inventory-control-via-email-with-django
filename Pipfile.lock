@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3758b8ce18defb81418facf05b9a58fef7216b6a84fa51ed78e58456cae678e2"
+            "sha256": "094577467a577f23067e1bf4c02c35751275942e475dd65aadefc5ae32b30d1c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,11 +18,11 @@
     "default": {
         "asgiref": {
             "hashes": [
-                "sha256:1d2880b792ae8757289136f1db2b7b99100ce959b2aa57fd69dab783d05afac4",
-                "sha256:4a29362a6acebe09bf1d6640db38c1dc3d9217c68e6f9f6204d72667fc19a424"
+                "sha256:71e68008da809b957b7ee4b43dbccff33d1b23519fb8344e33f049897077afac",
+                "sha256:9567dfe7bd8d3c8c892227827c41cce860b368104c3431da67a0c5a65a949506"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.5.2"
+            "version": "==3.6.0"
         },
         "beautifulsoup4": {
             "hashes": [
@@ -79,6 +79,14 @@
             ],
             "index": "pypi",
             "version": "==1.14.0"
+        },
+        "django-tables2": {
+            "hashes": [
+                "sha256:50762bf3d7c61a4eb70e763c3e278650d7266bb78d0497fc8fafcf4e507c9a64",
+                "sha256:6c72dd208358539e789e4c0efd7d151e43283a4aa4093a35f44c43489e7ddeaa"
+            ],
+            "index": "pypi",
+            "version": "==2.4.1"
         },
         "fontawesomefree": {
             "hashes": [

@@ -12,6 +12,7 @@ django-bootstrap-v5 = "*"
 google-api-python-client = "*"
 google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
+django-tables2 = "*"
 
 [dev-packages]
 
