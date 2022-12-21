@@ -9,35 +9,36 @@
         <div class="col-md-4 offset-md-4 shadow border-0  border-light rounded">
             <form action="/signin/" method="post" class=" card card-body text-center border-0 needs-validation" novalidate>
                 <div class="card-title">
-                    <span>
-                        <i class="fa-solid fa-circle-user fa-xl"></i>
+                    <div class="p-2"><i class="fa-solid fa-circle-user text-primary fa-xl"></i></div>
+                    <h3 class="p-2 fw-light">
                         Iniciar Sesion
-                    </span>
+                    </h3>
                 </div>
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="username" class="form-label">Nombre de Usuario: </label>
-                    <input type="text" id="username" name="username" class="form-control shadow-sm border-light" placeholder="Ingrese su nombre de usuario..." required>
+                    <label for="username" class="form-label fw-lighter">Nombre de Usuario: </label>
+                    <input type="text" id="username" name="username" class="form-control shadow-sm border-light fw-lighter" placeholder="Ingrese su nombre de usuario..." required>
                     <div class="valid-feedback">
                         ¡Se ve bien!
                     </div>
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback fw-lighter">
                         Por favor, ingrese un nombre de usuario.
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña: </label>
-                    <input type="password" id="password" name="password" class="form-control shadow-sm border-light" placeholder="Ingrese su contraseña..." required>
+                    <label for="password" class="form-label fw-lighter">Contraseña: </label>
+                    <input type="password" id="password" name="password" class="form-control shadow-sm border-light fw-lighter" placeholder="Ingrese su contraseña..." required>
                     <div class="valid-feedback">
                         ¡Se ve bien!
                     </div>
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback fw-lighter">
                         Por favor, ingrese una contraseña.
                     </div>
                 </div>
-                <button class="btn btn-dark shadow border-0 border-light" id="myWish">
+                <button class="btn btn-primary shadow border-0 border-light m-2" id="myWish">
                         Iniciar Sesion
                 </button>
+                <a class="btn btn-primary border-0 m-2" href="{% url 'registrar'  %}">Registrar</a>
             </form>
         </div>
     </div>
