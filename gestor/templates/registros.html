@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block content %} {% include 'buscar.html'%}
+{% if complete %}
+    <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-bs-dismiss="alert">x</button>
+        <span>Se elimino correctamente</span>
+    </div>
+{% endif %}
+<br> {% if productos %}
+<div class="container">
+    <div class="row justify-content-center p-4">
+        <div class="table-responsive shadow p-0 border-0 border-light rounded">
+            <table class="table">
+                <thead class="table bg-primary text-white ">
+                    <tr>
+                        <th></th>
+                        <th class="text-center"><span>Codigo de bulto</span></th>
+                        <th class="text-center"><span>Producto</span></th>
+                        <th class="text-center"><span>Marca</span></th>
+                        <th class="text-center"><span>Stock ingreso</span></th>
+                        <th class="text-center"><span>Stock disponible</span></th>
+                        <th class="text-center"><span>Envasado</span></th>
+                        <th class="text-center"><span>Ingreso</span></th>
+                        <th class="text-center"><span>Vencimiento</span></th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td></td>
+                        <td class="text-center">{{producto.codBulto | upper}}</td>
+                        <td class="text-center">{{producto.producto}}</td>
+                        <td class="text-center">{{producto.marca}}</td>
+                        <td class="text-center">{{producto.stockIng}}</td>
+                        <td class="text-center">{{producto.stockDisp}}</td>
+                        <td class="text-center">{{producto.fechaEnvasado | date:"d/m/Y"}}</td>
+                        <td class="text-center">{{producto.fechaIngreso | date:"d/m/Y"}}</td>
+                        <td class="text-center text-align-center"><strong>{{producto.fechaVnto | date:"d/m/Y"}}</strong></td>
+                        
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <div>
+                {%include 'paginator.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} {% endblock %}

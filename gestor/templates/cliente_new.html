@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="d-flex flex-column p-4">
+        <div class="d-flex flex-column justify-content align-items-center">
+            <div class="card border-1 text-center">
+                <div class="card-title text-center bg-light">
+                    <span>
+                        <!-- BOTON DE NUEVO PRODUCTO -->
+                        <h5><i class="fa-solid fa-square-plus"></i>  Nuevo Cliente</h5>
+                    </span>
+                </div>
+                <div class="card-body p-1 m-auto d-md-flex shadow border-0  border-light rounded">
+                    <div class="mx-5">
+                        <form method="POST" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <table>{{ formulario|crispy}}</table>
+                            
+                            <div class="card-title text-center bg-light">
+                                <span>
+                                    <!-- BOTON DE NUEVO PRODUCTO -->
+                                    <h5>Credito</h5>
+                                </span>
+                            </div>
+                            <table>{{form_cred|crispy}}</table>
+
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

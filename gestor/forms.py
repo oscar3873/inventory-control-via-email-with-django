@@ -1,7 +1,7 @@
 import datetime
 from django import forms
 from django.forms import DateInput
-from gestor.models import Producto
+from gestor.models import *
 from django.forms.widgets import NumberInput
 # from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout
@@ -58,8 +58,8 @@ class ProductoForm(forms.ModelForm):
             if fechaIngreso<fechaEnvasado:
                 self._errors['fechaEnvasado'] = self.error_class(['La fecha de envasado debe ser anterior a la del ingreso.'])
 
-        if fechaVnto != None and fechaVnto <= datetime.date.today():
-            self._errors['fechaVnto'] = self.error_class(['No es posible cargar producto vencido.'])
+        # if fechaVnto != None and fechaVnto <= datetime.date.today:
+        #     self._errors['fechaVnto'] = self.error_class(['No es posible cargar producto vencido.'])
     
         if type(stockIng) == type(None):
             self._errors['stockIng'] = self.error_class(['Campo obligatorio.'])
@@ -82,3 +82,18 @@ class ProductoForm(forms.ModelForm):
             self._errors['codigoBulto'] = self.error_class(['El numero ingresado debe ser mayor a cero.'])
         
         return self.cleaned_data
+
+class CreditoForm(forms.ModelForm):
+    class Meta:
+        model = Credito
+        fields = ('monto', 'cuotas', 'fecha_inicio', 'fecha_vnto')
+        widgets = {
+            'fecha_inicio': NumberInput(attrs={'type': 'date'}),
+            'fecha_vnto': NumberInput(attrs={'type': 'date'}),
+            }
+        
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ('nombre', 'apellido', 'dni','direccion','empeño')
+        

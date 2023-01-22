@@ -19,8 +19,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.paginator import Paginator
 
-from gestor.models import Producto
-from gestor.forms import ProductoForm
+from gestor.models import *
+from gestor.forms import *
 
 from gestor.utils import insertGoogleCalendar
 
@@ -79,7 +79,12 @@ def index(request):
     ultimos_productos.reverse()
     productos_a_vencer = list(Producto.objects.all().order_by('fechaVnto')) [0:3]
 
-    date = datetime.date.today()
+
+    cred = Credito.objects.get(pk=1)
+    cliente = Cliente.objects.get(pk=1)
+    print(cliente.credito_set.add(Credito.objects.create(monto=1234,cuotas=3)))
+
+    date = datetime.today
     productos_vencidos = 0
     for prod_ven in Producto.objects.all():
         if prod_ven.fechaVnto <= date:
@@ -121,12 +126,12 @@ def index(request):
 
     producots_vencidos = Producto.objects.filter(vencido = True)
 
-    if Producto.objects.all().count():
-        porcentaje_ven = round((100*(len(prod_vencidos_all) / Producto.objects.all().count() )),2)
-        porcentaje_ven_actual = round((100*(len(prod_ven_año) / len(productos_all))),2)
-    else :
-        porcentaje_ven = 0
-        porcentaje_ven_actual = 0
+    # if Producto.objects.all().count():
+    #     # porcentaje_ven = round((100*(len(prod_vencidos_all) / Producto.objects.all().count() )),2)
+    #     # porcentaje_ven_actual = round((100*(len(prod_ven_año) / len(productos_all))),2)
+    # else :
+    #     porcentaje_ven = 0
+    #     porcentaje_ven_actual = 0
 
 
     cont = 0
@@ -150,7 +155,7 @@ def index(request):
 
     lista=[]
     lista_stock=[]
-    for dex in Producto.objects.all().filter(fechaIngreso__year= date.year , vencido = False):
+    for dex in Producto.objects.all().filter(fechaIngreso__year= 2022 , vencido = False):
         lista.append("{producto_d} {tipo_d} ({marca_d})".format(
             producto_d = dex.producto,
             tipo_d = dex.tipo,
@@ -165,12 +170,12 @@ def index(request):
         'productos_a_vencer': productos_a_vencer,  
 
         'entregados' : entregado,
-        'porc_ven' : porcentaje_ven,
+        # 'porc_ven' : porcentaje_ven,
         'prod_ven_all' : len(prod_vencidos_all),
         'prod_all' : Producto.objects.all().count(),
         'prod_ven' : len(producots_vencidos),
 
-        'porcentaje_ven_actual' : porcentaje_ven_actual,
+        # 'porcentaje_ven_actual' : porcentaje_ven_actual,
         'productos_all_anual': len(productos_all),  # CANTIDAD DE LOS PRODUCTOS INGRESADOS durante el correinte año
         'productos_ven': productos_vencidos,        # CANTIDAD DE LOS PRODUCTOS VENCIDOS EN EL AÑO
         
@@ -227,7 +232,7 @@ class ProductoListView(generic.ListView):
         return render(request, 'productos.html', context)
         
 #LISTA DE VENCIMIENTOS
-class VencimientoListView(generic.ListView):
+class VencimientoListView():
 
     def producto_delete(request, pk):
         prod = Producto.objects.get(pk=pk)
@@ -397,3 +402,57 @@ def calendarView(request):
     
     
     return render(request, 'calendar.html')
+
+
+
+class Empleados_list():
+    def cliente_new(request):
+        # empleado = get_object_or_404(request, pk)
+        if request.method == 'POST':
+            formulario = ClienteForm(request.POST)
+            form_cred = CreditoForm(request.POST)
+            if formulario.is_valid():
+                cliente_new = formulario.save(commit=False)
+                cliente_new.nombre = formulario.cleaned_data['nombre']
+                cliente_new.apellido = formulario.cleaned_data['apellido']
+                cliente_new.dni = formulario.cleaned_data['dni']
+                cliente_new.direccion = formulario.cleaned_data['direccion']
+                cliente_new.empeño = formulario.cleaned_data['empeño']
+
+                # CREDITO #
+                credito = form_cred.save(commit=False)
+                credito = Credito.objects.create(
+                    monto = form_cred.cleaned_data['monto'],
+                    cuotas = form_cred.cleaned_data['cuotas'],
+                    fecha_inicio = form_cred.cleaned_data['fecha_inicio'],
+                    fecha_vnto = form_cred.cleaned_data['fecha_vnto'],
+                )
+                credito.save()
+
+                monto_comision = form_cred.cleaned_data['monto']
+                comision = Comision.objects.create(
+                    monto = monto_comision*(0.075),
+                    fecha = form_cred.cleaned_data['fecha_inicio']
+                    # empleado = 
+                )
+                comision.save()
+
+                # cliente_new.empleado = 
+                cliente_new.credito = credito
+                cliente_new.save()
+
+                registro = Registro.objects.create(
+                    # Emp_Admin=empleado,
+                    cliente=cliente_new
+                    )
+                registro.save()
+                
+                
+                
+                return redirect('home')
+            else:
+                return render(request, 'cliente_new.html',{'formulario':formulario, 'form_cred':form_cred})
+        else:
+            formulario = ClienteForm()
+            form_cred = CreditoForm()
+        return render(request, 'cliente_new.html', {'formulario': formulario, 'form_cred':form_cred})
